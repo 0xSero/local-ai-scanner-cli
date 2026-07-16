@@ -1,0 +1,366 @@
+retailer,region,message
+minisforum,US,no products returned
+gmktec,US,no products returned
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+microcenter,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+newegg,US,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,PL,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,DE,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,GB,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+ebay,US,HTTP 403
+crucial,GB,no price for CT32G4DFD832A
+crucial,GB,no price for CT16G4DFD832A
+crucial,GB,no price for CT64G4RFS432A
+crucial,GB,no price for CT32G4RFD432A
+crucial,GB,no price for CT64G56RS432A
+crucial,DE,no price for CT16G4DFD832A
+crucial,DE,no price for CT64G4RFS432A
+crucial,DE,no price for CT32G4RFD432A
+crucial,DE,no price for CT64G56RS432A
+crucial,PL,no price for CT16G4DFD832A
+crucial,PL,no price for CT64G4RFS432A
+crucial,PL,no price for CT32G4RFD432A
+crucial,PL,no price for CT64G56RS432A
+crucial,US,no price for CT16G4DFD832A
+crucial,US,no price for CT64G4RFS432A
+crucial,US,no price for CT32G4RFD432A
+crucial,US,no price for CT64G56RS432A
+crucial,JP,no price for CT16G4DFD832A
+crucial,JP,no price for CT64G4RFS432A
+crucial,JP,no price for CT32G4RFD432A
+crucial,JP,no price for CT64G56RS432A
+ceneo,PL,no JSON-LD products parsed
+ceneo,PL,no JSON-LD products parsed
+ceneo,PL,no JSON-LD products parsed
+alternate,DE,HTTP 429
+alternate,DE,HTTP 429
+alternate,DE,HTTP 429
+alternate,DE,HTTP 429
+alternate,DE,HTTP 429
+alternate,DE,HTTP 429
+alternate,DE,HTTP 429
+alternate,DE,HTTP 429
+alternate,DE,HTTP 429
+alternate,DE,HTTP 429
+alternate,DE,HTTP 429
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+amazon,GB,anti-bot challenge page (Akamai/AWS WAF)
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403
+allegro,PL,HTTP 403

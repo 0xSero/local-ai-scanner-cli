@@ -1,0 +1,222 @@
+/**
+ * globals.css — Tailwind v4 CSS-first config.
+ * Editorial dark-first aesthetic inspired by local.ai: clay single-accent,
+ * mono-for-data / sans-for-prose split, hairline borders, dotted grid
+ * textures, hatched bar fills. No glows in chrome.
+ */
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ── Theme token mappings ─────────────────────────────────────────────── */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-k-accent: var(--k-accent);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+/* ── Dark mode (default) ──────────────────────────────────────────────── */
+:root {
+  --background: oklch(0.145 0.002 285);
+  --foreground: oklch(0.93 0.002 285);
+  --card: oklch(0.18 0.002 285);
+  --card-foreground: oklch(0.93 0.002 285);
+  --popover: oklch(0.16 0.002 285);
+  --popover-foreground: oklch(0.93 0.002 285);
+  --primary: oklch(0.665 0.12 48);
+  --primary-foreground: oklch(0.15 0.002 285);
+  --secondary: oklch(0.22 0.002 285);
+  --secondary-foreground: oklch(0.93 0.002 285);
+  --muted: oklch(0.20 0.002 285);
+  --muted-foreground: oklch(0.62 0.004 285);
+  --accent: oklch(0.24 0.003 285);
+  --accent-foreground: oklch(0.93 0.002 285);
+  --destructive: oklch(0.55 0.16 25);
+  --border: oklch(0.25 0.002 285);
+  --input: oklch(0.22 0.002 285);
+  --ring: oklch(0.665 0.12 48);
+  --radius: 0.625rem;
+
+  /* Editorial kit */
+  --paper: #161618;
+  --ink: #e8e8ea;
+  --ink-muted: #8c8c90;
+  --ink-faint: #5a5a5e;
+  --rule: #2a2a2e;
+  --gridline: #1e1e22;
+  --k-accent: #c4956a;
+  --accent-deep: #8fb4dc;
+
+  /* Hardware family colors (vendor accents for data viz only) */
+  --hw-gpu: oklch(0.585 0.125 45);
+  --hw-gpu-soft: oklch(0.30 0.06 45);
+  --hw-apple: oklch(0.60 0.045 205);
+  --hw-apple-soft: oklch(0.30 0.02 205);
+  --hw-amd: oklch(0.62 0.14 25);
+  --hw-amd-soft: oklch(0.30 0.07 25);
+  --hw-memory: oklch(0.60 0.02 285);
+  --hw-memory-soft: oklch(0.30 0.01 285);
+
+  /* Chart helpers */
+  --chart-grid: oklch(0.24 0.002 285);
+  --chart-best: oklch(0.58 0.11 155);
+
+  /* Floating surface shadows (menus/popovers only — never cards) */
+  --shadow-float: 0 0 0 1px rgb(0 0 0 / 0.3), 0 8px 24px -6px rgb(0 0 0 / 0.4), inset 0 1px 0 rgb(255 255 255 / 0.04);
+}
+
+/* ── Light mode ───────────────────────────────────────────────────────── */
+.light {
+  --background: oklch(0.99 0 0);
+  --foreground: oklch(0.205 0.003 285);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.205 0.003 285);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.205 0.003 285);
+  --primary: oklch(0.585 0.125 45);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.965 0.001 285);
+  --secondary-foreground: oklch(0.30 0.004 285);
+  --muted: oklch(0.965 0.001 285);
+  --muted-foreground: oklch(0.52 0.006 285);
+  --accent: oklch(0.96 0.002 285);
+  --accent-foreground: oklch(0.30 0.004 285);
+  --destructive: oklch(0.52 0.13 32);
+  --border: oklch(0.915 0.003 285);
+  --input: oklch(0.928 0.003 285);
+  --ring: oklch(0.585 0.125 45);
+
+  --paper: #f7f7f8;
+  --ink: #2f3033;
+  --ink-muted: #6b6c70;
+  --ink-faint: #9c9da2;
+  --rule: #e4e4e7;
+  --gridline: #ececee;
+  --k-accent: #6a89b8;
+}
+
+/* ── Base styles ──────────────────────────────────────────────────────── */
+* {
+  border-color: var(--border);
+}
+*:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+html {
+  overflow-x: clip;
+}
+body {
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3 {
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+
+/* ── Utility classes (from local.ai editorial kit) ────────────────────── */
+.k-smallcaps {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.k-data {
+  font-family: var(--font-geist-mono), monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+.tabular {
+  font-family: var(--font-geist-mono), monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.font-mono, .mono {
+  font-family: var(--font-geist-mono), monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.scrollbar-stable {
+  scrollbar-gutter: stable;
+}
+
+/* Dotted-grid texture for chart/card backgrounds */
+.dotted-grid {
+  background-image:
+    linear-gradient(to top, var(--chart-grid) 1px, transparent 1px),
+    radial-gradient(circle, color-mix(in oklab, var(--foreground) 12%, transparent) 1px, transparent 1.2px);
+  background-size: 100% 46px, 13px 13px;
+}
+
+/* Diagonal hatch fill for GPU bars */
+.bar-hatch-gpu {
+  background-image: repeating-linear-gradient(135deg, var(--hw-gpu) 0 4px, transparent 4px 8px);
+}
+
+/* Scroll edge fade hint */
+.scroll-x-hint {
+  background:
+    linear-gradient(to right, var(--background) 30%, transparent),
+    linear-gradient(to right, transparent, var(--background) 70%) 100% 0,
+    linear-gradient(to right, rgb(0 0 0 / 0.2), transparent 15%),
+    linear-gradient(to right, transparent, rgb(0 0 0 / 0.2) 85%) 100% 0;
+  background-repeat: no-repeat;
+  background-size: 40px 100%, 40px 100%, 15px 100%, 15px 100%;
+  background-attachment: local, local, scroll, scroll;
+}
+
+/* Custom thin scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted-foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

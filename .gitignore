@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Build artifacts
+web/.next/
+web/tsconfig.tsbuildinfo
+*.tsbuildinfo
+
+# Cache archives (keep latest.json, drop timestamped copies)
+cache/snapshot-*.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.local
