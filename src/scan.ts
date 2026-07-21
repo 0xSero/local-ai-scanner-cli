@@ -20,9 +20,19 @@ export interface ScanOptions {
   categories?: HardwareCategory[];
   /** Restrict to these region codes. Empty/undefined = all. */
   regions?: string[];
+  /** Persist the snapshot to the cache directory. Defaults to `false` so
+   * library callers get an in-memory result without side effects; the CLI
+   * sets this to `true` to keep its cache-writing behavior. */
+  persist?: boolean;
+  /** Cache directory to write to when `persist` is true. Defaults to
+   * {@link defaultCacheDir} (`<cwd>/cache`). */
+  cacheDir?: string;
 }
 
-/** Run a full scan and persist the snapshot. Returns the written snapshot. */
+/** Run a full scan. By default returns the snapshot in memory without writing
+ * to disk; pass `{ persist: true }` to also write it to the cache directory
+ * (matching the CLI's behavior). Failed sources are recorded in the snapshot
+ * rather than aborting the whole scan, so a partial result is always returned. */
 export async function runScan(options: ScanOptions = {}): Promise<PriceSnapshot> {
   const cats = options.categories?.length ? options.categories : (["gpu", "apple", "amd", "memory"] as HardwareCategory[]);
   const regionCodes = options.regions?.length ? options.regions : REGIONS.map((r) => r.code);
@@ -65,7 +75,9 @@ export async function runScan(options: ScanOptions = {}): Promise<PriceSnapshot>
     errors: allErrors,
   };
 
-  await writeSnapshot(snapshot);
+  if (options.persist) {
+    await writeSnapshot(snapshot, options.cacheDir);
+  }
   return snapshot;
 }
 

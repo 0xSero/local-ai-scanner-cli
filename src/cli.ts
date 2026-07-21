@@ -64,7 +64,7 @@ async function cmdScan(args: Record<string, string | undefined>) {
   const categories = parseList(args.category, CATEGORIES);
   const regions = args.region ? args.region.split(",").map((s) => s.trim()) : undefined;
   console.log(`⟳ Scanning ${categories.join(", ")} across ${regions?.join(", ") ?? "all regions"}…\n`);
-  const snapshot = await runScan({ categories, regions });
+  const snapshot = await runScan({ categories, regions, persist: true });
   const byCat = new Map<string, number>();
   for (const l of snapshot.listings) byCat.set(l.category, (byCat.get(l.category) ?? 0) + 1);
   console.log(`✓ ${snapshot.listings.length} listings collected.`);

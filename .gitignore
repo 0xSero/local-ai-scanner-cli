@@ -16,3 +16,6 @@ Thumbs.db
 # Env
 .env
 .env.local
+
+# Local editor/agent state
+.zcode/
