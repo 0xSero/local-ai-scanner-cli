@@ -64,6 +64,12 @@ await runScan({ categories: ["gpu"], persist: true });
 
 // Persist to a custom location:
 await runScan({ persist: true, cacheDir: "./my-cache" });
+
+// Track progress as each source is hit (optional):
+await runScan({
+  categories: ["gpu"],
+  onProgress: (e) => console.log(e.phase, e.region, e.source, e.listings ?? e.productCount),
+});
 ```
 
 The public API (re-exported from `src/index.ts`) covers the scan orchestrator,
@@ -74,12 +80,14 @@ and the Effect schemas:
 import {
   runScan, readLatest, writeSnapshot, listSnapshots, defaultCacheDir,
   PRODUCTS, productsByCategory, REGIONS, allSources, summarizeAll,
-  formatPrice, renderTable, PriceSnapshotSchema,
+  formatPrice, renderTable, PriceSnapshotSchema, ScanProgress,
 } from "local-ai-scanner-cli";
 ```
 
 > Note: `runScan()` hits live retailers over HTTP. For a no-network read of a
-> cached snapshot, use `readLatest()` instead.
+> cached snapshot, use `readLatest()` instead. Each fetch has a 15s timeout, so
+> a hung source fails fast and is recorded in `snapshot.errors` rather than
+> blocking the scan.
 
 ## bunx CLI
 
@@ -92,7 +100,22 @@ bunx local-ai-scanner-cli sources
 ```
 
 A `scan` writes to `./cache/latest.json` in the **current working directory**
-(not inside `node_modules`), so it lands wherever you invoked the command.
+(not inside `node_modules`), so it lands wherever you invoked the command. It
+prints per-source progress as it goes — each retailer shows a `→` when it
+starts, then `✓` with a listing count or `✗` with an error count:
+
+```
+⟳ Scanning gpu across US…
+  → US/newegg (20 products)
+  → US/amazon (20 products)
+  → US/ebay (20 products)
+  → US/microcenter (20 products)
+  ✗ US/microcenter — 20 error(s)
+  ✗ US/ebay — 20 error(s)
+  ✗ US/newegg — 20 error(s)
+  ✓ US/amazon — 29 listings
+✓ 29 listings collected.
+```
 
 ## CLI commands
 
@@ -210,7 +233,9 @@ web/                # Next.js display site (local-ai-web design language)
 
 1. `scan` runs all registered sources for each region in parallel. Within a
    region, sources run concurrently (different hosts); within a source,
-   products are fetched sequentially with a delay to be polite.
+   products are fetched sequentially with a delay to be polite. Each fetch has
+   a 15s timeout, so a source that hangs (WAF challenge, dropped socket) fails
+   fast and is recorded in `snapshot.errors` instead of stalling the scan.
 2. Each source normalizes its results into `PriceListing` rows tagged with
    product, retailer, region, condition, price, currency, stock status, and
    quantity (units available).
