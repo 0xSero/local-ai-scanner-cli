@@ -19,3 +19,6 @@ Thumbs.db
 
 # Local editor/agent state
 .zcode/
+
+# Bun lockfile (this repo IS the package; no lockfile needed here)
+bun.lock
