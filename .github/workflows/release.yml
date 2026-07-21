@@ -1,0 +1,90 @@
+name: Release
+
+# Two jobs, gated by event type:
+#   - push to main  → `release`        semantic-release auto-versions + publishes
+#   - workflow_dispatch → `publish-current`  publishes the current package.json
+#                                            version (used for the first 0.1.0 push)
+#
+# Both publish to npmjs.org using the NPM_TOKEN repo secret (a granular access
+# token with 2FA-bypass enabled — required because the npm account has 2FA on,
+# which otherwise blocks non-interactive `npm publish` with E403).
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write   # semantic-release pushes the changelog + version commit and tags it
+
+jobs:
+  release:
+    # Auto-version + publish on every push to main. semantic-release reads
+    # Conventional Commits since the last git tag, computes the next version
+    # (feat → minor, fix/perf → patch, *! → major), bumps package.json, updates
+    # CHANGELOG.md, publishes to npm, and creates a GitHub release. A push whose
+    # commits are all non-releasable (ci:, docs:, chore:) → no publish.
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (full history for commit analysis)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org/
+
+      # Install the package's own deps + devDeps so the npm plugin's
+      # prepublishOnly build (tsc → dist/) has typescript available.
+      - name: Install dependencies
+        run: npm install
+
+      # semantic-release is installed ephemerally (--no-save, per the docs'
+      # npx recommendation) with pinned versions for reproducibility.
+      - name: Install semantic-release
+        run: |
+          npm install --no-save \
+            semantic-release@25.0.8 \
+            @semantic-release/commit-analyzer@13.0.1 \
+            @semantic-release/release-notes-generator@14.1.1 \
+            @semantic-release/changelog@7.0.0 \
+            @semantic-release/npm@13.1.5 \
+            @semantic-release/git@11.0.0 \
+            @semantic-release/github@12.0.9
+
+      - name: Run semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release
+
+  publish-current:
+    # Manual trigger: publishes whatever version is in package.json right now,
+    # no version bump. Use this to land the initial 0.1.0 (and any manual
+    # republish) without waiting for a conventional-commit merge.
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org/
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build dist/
+        run: npm run build
+
+      - name: Publish to npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --access public

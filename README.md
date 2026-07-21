@@ -339,3 +339,60 @@ Runtime validation uses Effect `Schema` (pinned `effect@4.0.0-beta.92`). All
 Effect imports go through `lib/effect.ts` — never import `"effect"` directly.
 The `PriceSnapshotSchema` validates every cache read so a corrupt file fails
 loudly instead of silently propagating bad data.
+
+## Releases
+
+Publishing to [npm](https://www.npmjs.com/package/local-ai-scanner-cli) is
+automated by the `release.yml` GitHub Actions workflow. It has two jobs:
+
+| Job | Trigger | What it does |
+| --- | --- | --- |
+| `release` | push to `main` | [semantic-release](https://semantic-release.gitbook.io/) reads [Conventional Commits](https://www.conventionalcommits.org/) since the last tag, computes the next version, bumps `package.json`, updates `CHANGELOG.md`, publishes to npm, and creates a GitHub release + tag. |
+| `publish-current` | `workflow_dispatch` (manual) | Publishes whatever version is in `package.json` right now — no bump. Used to land the initial `0.1.0`. |
+
+### Version bumps from commit messages
+
+semantic-release uses the [angular](https://github.com/angular/angular/blob/main/CONTRIBUTING.md#commit) preset:
+
+| Commit type | Bump |
+| --- | --- |
+| `feat:` | minor (`0.1.0` → `0.2.0`) |
+| `fix:`, `perf:` | patch (`0.1.0` → `0.1.1`) |
+| `feat!:`, `fix!:` (or `BREAKING CHANGE:` footer) | major (`0.1.0` → `1.0.0`) |
+| `chore:`, `docs:`, `ci:`, `test:`, `refactor:`, `style:`, `build:` | none (no publish) |
+
+So a merge to `main` containing only `docs:` commits publishes nothing; a
+`feat:` merge publishes a new minor version automatically.
+
+### One-time setup (npm token)
+
+The npm account has 2FA enabled, which blocks non-interactive `npm publish`
+with `E403`. The workflow authenticates via a granular access token with
+2FA-bypass, stored as a repo secret so CI never hits the 2FA prompt:
+
+1. **Create the token** — at
+   [npmjs.com → Access Tokens](https://www.npmjs.com/settings/sero/tokens)
+   (or your own account), create a **Granular Access Token**:
+   - Allowed packages: `local-ai-scanner-cli`
+   - Expiration: as long as you like (e.g. 1 year)
+   - Permissions: **Read and write**
+   - **Allow access via API / bypass 2FA** must be enabled for this token
+     (this is what unblocks the CI publish)
+2. **Add it as a GitHub secret** — in
+   [repo Settings → Secrets and variables → Actions](https://github.com/0xSero/local-ai-scanner-cli/settings/secrets/actions),
+   add a new repository secret named **`NPM_TOKEN`** with the token value.
+
+The token is referenced by name in `release.yml` and never committed to the
+repo. Rotate it by repeating the two steps above with a new token.
+
+### First publish (0.1.0)
+
+After the secret is in place, publish the initial `0.1.0` manually:
+
+1. Go to
+   [Actions → Release → Run workflow](https://github.com/0xSero/local-ai-scanner-cli/actions/workflows/release.yml)
+2. Choose the `main` branch, click **Run workflow**
+3. The `publish-current` job builds `dist/` and runs `npm publish --access public`
+
+This lands `0.1.0` on npm immediately. Every subsequent `feat:`/`fix:` merge to
+`main` then auto-publishes the next version via the `release` job.
