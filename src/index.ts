@@ -26,6 +26,7 @@ import "./sources/index.js";
 
 export * from "./scan.js";
 export * from "./cache.js";
+export * from "./history.js";
 export * from "./products.js";
 export * from "./source.js";
 export * from "./regions.js";

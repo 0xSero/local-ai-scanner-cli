@@ -19,6 +19,7 @@
  */
 import { runScan } from "./scan.js";
 import { readLatest } from "./cache.js";
+import { buildPriceEvolution } from "./history.js";
 import { PRODUCTS, productsByCategory } from "./products.js";
 import { REGIONS } from "./regions.js";
 import { allSources } from "./source.js";
@@ -54,6 +55,8 @@ async function main() {
       return cmdPrices(args);
     case "sources":
       return cmdSources();
+    case "history":
+      return cmdHistory(args);
     default:
       printHelp();
       process.exit(cmd ? 1 : 0);
@@ -158,6 +161,14 @@ async function cmdSources() {
   console.log(`Products: ${PRODUCTS.length} total`);
 }
 
+async function cmdHistory(args: Record<string, string | undefined>) {
+  // `--cacheDir <path>` opts into a non-default cache; a bare `--cacheDir`
+  // flag (parsed as "true") falls back to the default.
+  const cacheDir = args.cacheDir && args.cacheDir !== "true" ? args.cacheDir : undefined;
+  const evo = await buildPriceEvolution(cacheDir);
+  console.log(JSON.stringify(evo, null, 2));
+}
+
 function parseList(value: string | undefined, valid: HardwareCategory[]): HardwareCategory[] {
   if (!value || value === "true") return valid;
   const parts = value.split(",").map((s) => s.trim() as HardwareCategory);
@@ -177,10 +188,15 @@ Commands:
   sources
           List configured data sources.
 
+  history [--cacheDir <path>]
+          Print price evolution as JSON — per-product price history across
+          all cached snapshots, with deltas between scans. No network.
+
 Examples:
   tsx src/cli.ts scan --category gpu
   tsx src/cli.ts prices --category gpu --region US
-  tsx src/cli.ts prices --condition refurbished`);
+  tsx src/cli.ts prices --condition refurbished
+  tsx src/cli.ts history > evolution.json`);
 }
 
 main().catch((err) => {

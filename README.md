@@ -79,6 +79,7 @@ and the Effect schemas:
 ```ts
 import {
   runScan, readLatest, writeSnapshot, listSnapshots, defaultCacheDir,
+  buildPriceEvolution,
   PRODUCTS, productsByCategory, REGIONS, allSources, summarizeAll,
   formatPrice, renderTable, PriceSnapshotSchema, ScanProgress,
 } from "local-ai-scanner-cli";
@@ -117,6 +118,82 @@ starts, then `✓` with a listing count or `✗` with an error count:
 ✓ 29 listings collected.
 ```
 
+## Price history
+
+`history` reads every cached snapshot (`cache/snapshot-*.json` archives plus
+`latest.json`), sorts them oldest → newest, and prints a JSON report of how
+each product's price changed between scans — absolute and percent deltas,
+per currency. No network: it works purely off what's on disk.
+
+```bash
+# One-liner — print the evolution as JSON to stdout:
+bunx local-ai-scanner-cli history
+
+# Redirect to a file for analysis / diffing:
+bunx local-ai-scanner-cli history > evolution.json
+
+# Point at a non-default cache directory:
+bunx local-ai-scanner-cli history --cacheDir ./my-cache > evolution.json
+```
+
+Each product gets one entry per snapshot that included it. Consecutive points
+carry a `change` delta vs the prior point (same currency only — you can't diff
+$1,599 against ¥899,800). The shape:
+
+```json
+{
+  "generatedAt": "2026-07-21T13:21:26.666Z",
+  "snapshotsAnalyzed": 2,
+  "snapshotTimestamps": ["2026-07-16T14:36:41.620Z", "2026-07-21T13:21:26.666Z"],
+  "products": {
+    "rtx-4090": {
+      "productId": "rtx-4090",
+      "productName": "RTX 4090",
+      "category": "gpu",
+      "points": [
+        {
+          "snapshotAt": "2026-07-16T14:36:41.620Z",
+          "currency": "USD",
+          "lowestNew": 1599.99,
+          "averageNew": 1799.99,
+          "medianNew": 1749.99,
+          "retailerCount": 5,
+          "listingCount": 12
+        },
+        {
+          "snapshotAt": "2026-07-21T13:21:26.666Z",
+          "currency": "USD",
+          "lowestNew": 1649.99,
+          "averageNew": 1849.99,
+          "medianNew": 1799.99,
+          "retailerCount": 4,
+          "listingCount": 9,
+          "change": {
+            "lowestNewDelta": 50.0,
+            "averageNewDelta": 50.0,
+            "lowestNewPct": 3.13,
+            "averageNewPct": 2.78
+          }
+        }
+      ]
+    }
+  }
+}
+```
+
+The library API exposes the same thing — `buildPriceEvolution(cacheDir?)`
+returns the typed report without printing:
+
+```ts
+import { buildPriceEvolution } from "local-ai-scanner-cli";
+const evo = await buildPriceEvolution("./cache");
+console.log(evo.snapshotsAnalyzed, "snapshots;", Object.keys(evo.products).length, "products tracked");
+```
+
+> Snapshots accumulate as you run `scan` (with `persist: true`, which the CLI
+> does by default). The more scans you keep, the richer the evolution. Corrupt
+> or schema-invalid archives are skipped rather than aborting the report.
+
 ## CLI commands
 
 | Command | What it does |
@@ -125,6 +202,7 @@ starts, then `✓` with a listing count or `✗` with an error count:
 | `prices [--category <c>] [--region <r>] [--condition new\|refurbished\|used]` | Prints prices from the cached snapshot (no network) |
 | `export` | Exports the cached snapshot to `data/` as CSV + JSON |
 | `sources` | Lists configured data sources |
+| `history [--cacheDir <path>]` | Prints price evolution as JSON across all cached snapshots (no network) |
 
 ## Data exports
 

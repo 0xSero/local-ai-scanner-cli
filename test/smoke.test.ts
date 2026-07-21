@@ -23,6 +23,7 @@ import {
   allSources,
   summarizeAll,
   formatPrice,
+  buildPriceEvolution,
 } from "../src/index.js";
 
 test("barrel re-exports the public API", () => {
@@ -55,4 +56,11 @@ test("pure helpers behave on empty input", () => {
 
 test("defaultCacheDir points at <cwd>/cache", () => {
   expect(defaultCacheDir()).toBe(`${process.cwd()}/cache`);
+});
+
+test("buildPriceEvolution on a missing cache dir returns an empty report", async () => {
+  const evo = await buildPriceEvolution("/tmp/scanner-no-such-cache-dir");
+  expect(evo.snapshotsAnalyzed).toBe(0);
+  expect(Object.keys(evo.products)).toHaveLength(0);
+  expect(evo.snapshotTimestamps).toEqual([]);
 });
