@@ -64,7 +64,20 @@ async function cmdScan(args: Record<string, string | undefined>) {
   const categories = parseList(args.category, CATEGORIES);
   const regions = args.region ? args.region.split(",").map((s) => s.trim()) : undefined;
   console.log(`⟳ Scanning ${categories.join(", ")} across ${regions?.join(", ") ?? "all regions"}…\n`);
-  const snapshot = await runScan({ categories, regions, persist: true });
+  const snapshot = await runScan({
+    categories,
+    regions,
+    persist: true,
+    onProgress: (e) => {
+      if (e.phase === "start") {
+        console.log(`  → ${e.region}/${e.source} (${e.productCount} products)`);
+      } else if (e.errors && !e.listings) {
+        console.log(`  ✗ ${e.region}/${e.source} — ${e.errors} error(s)`);
+      } else {
+        console.log(`  ✓ ${e.region}/${e.source} — ${e.listings} listings${e.errors ? `, ${e.errors} errors` : ""}`);
+      }
+    },
+  });
   const byCat = new Map<string, number>();
   for (const l of snapshot.listings) byCat.set(l.category, (byCat.get(l.category) ?? 0) + 1);
   console.log(`✓ ${snapshot.listings.length} listings collected.`);

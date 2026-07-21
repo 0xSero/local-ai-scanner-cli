@@ -21,6 +21,10 @@ export interface FetchResult {
   finalUrl: string;
 }
 
+/** Per-fetch timeout. A hung socket aborts after this instead of blocking the
+ * scan forever — dead retailers fail fast and get recorded in snapshot.errors. */
+export const DEFAULT_FETCH_TIMEOUT_MS = 15_000;
+
 /**
  * Fetch a URL as text with one retry on transient errors.
  *
@@ -33,7 +37,7 @@ export interface FetchResult {
  */
 export async function fetchText(
   url: string,
-  options?: { signal?: AbortSignal; cookies?: string },
+  options?: { signal?: AbortSignal; cookies?: string; timeoutMs?: number },
 ): Promise<FetchResult> {
   const headers: Record<string, string> = {
     "User-Agent": DESKTOP_UA,
@@ -51,9 +55,14 @@ export async function fetchText(
   if (options?.cookies) {
     headers["Cookie"] = options.cookies;
   }
+  const timeoutMs = options?.timeoutMs ?? DEFAULT_FETCH_TIMEOUT_MS;
   for (let attempt = 0; attempt < 2; attempt++) {
+    // Each attempt gets a fresh timeout; a hung socket aborts instead of
+    // blocking the scan forever. Combined with any caller-provided signal.
+    const timeoutSignal = AbortSignal.timeout(timeoutMs);
+    const signal = options?.signal ? AbortSignal.any([options.signal, timeoutSignal]) : timeoutSignal;
     try {
-      const res = await fetch(url, { headers, redirect: "follow", signal: options?.signal });
+      const res = await fetch(url, { headers, redirect: "follow", signal });
       const body = await res.text();
       return { ok: res.ok, status: res.status, body, finalUrl: res.url || url };
     } catch (err) {

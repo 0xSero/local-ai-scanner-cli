@@ -27,6 +27,24 @@ export interface ScanOptions {
   /** Cache directory to write to when `persist` is true. Defaults to
    * {@link defaultCacheDir} (`<cwd>/cache`). */
   cacheDir?: string;
+  /** Optional progress callback — fired when a source starts and when it
+   * finishes. The CLI uses this to print what it's hitting as it goes;
+   * library callers can ignore it. */
+  onProgress?: (event: ScanProgress) => void;
+}
+
+/** A progress event from the scan loop. `phase: "start"` fires before a source
+ * is hit; `phase: "done"` fires after, with the counts it returned. */
+export interface ScanProgress {
+  region: string;
+  source: string;
+  phase: "start" | "done";
+  /** Products being fetched (start only). */
+  productCount?: number;
+  /** Listings returned (done only). */
+  listings?: number;
+  /** Errors recorded (done only). */
+  errors?: number;
 }
 
 /** Run a full scan. By default returns the snapshot in memory without writing
@@ -55,12 +73,15 @@ export async function runScan(options: ScanOptions = {}): Promise<PriceSnapshot>
     const sourceJobs = sources.map(async (source) => {
       const relevant = products.filter((p) => source.categories.includes(p.category));
       if (relevant.length === 0) return;
+      options.onProgress?.({ region: code, source: source.id, phase: "start", productCount: relevant.length });
       try {
         const result = await source.scan(relevant, { regionCode: code });
         allListings.push(...result.listings);
         allErrors.push(...result.errors);
+        options.onProgress?.({ region: code, source: source.id, phase: "done", listings: result.listings.length, errors: result.errors.length });
       } catch (err) {
         allErrors.push({ retailer: source.id, region: code, message: `source crashed: ${String(err)}` });
+        options.onProgress?.({ region: code, source: source.id, phase: "done", listings: 0, errors: 1 });
       }
     });
     await Promise.all(sourceJobs);
