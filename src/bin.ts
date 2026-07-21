@@ -1,15 +1,17 @@
-#!/usr/bin/env bun
+#!/usr/bin/env node
 /**
- * `bunx` entry point — runs the CLI under Bun.
+ * CLI entry point — runs under Node (via `npx`/`npm`) or Bun (via `bunx`).
+ * Both runtimes invoke the bin explicitly, so the shebang only matters for
+ * direct execution; `node` is the maximally-compatible choice.
  *
  * `cli.ts` keeps its `tsx` shebang for in-workspace use (`npx tsx`,
- * `pnpm scan`); this thin entry lets the package declare a `bin` that targets
- * Bun instead. Importing `cli.ts` triggers its existing `main()` call, so this
- * file does nothing but load it.
+ * `pnpm scan`). This thin entry lets the package declare a `bin` that targets
+ * the published runtime instead. Importing `cli.ts` triggers its existing
+ * `main()` call, so this file does nothing but load it.
  *
  * Usage:
- *   bunx local-ai-scanner-cli scan --category gpu
+ *   npx local-ai-scanner-cli scan --category gpu
  *   bunx local-ai-scanner-cli prices --category gpu --region US
- *   bunx local-ai-scanner-cli sources
+ *   local-ai-scanner-cli sources
  */
 import "./cli.js";

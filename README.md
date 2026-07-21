@@ -31,26 +31,27 @@ cd web
 npx next dev --port 3001
 ```
 
-## Library usage (Bun)
+## Library usage
 
-The package ships TypeScript source directly — no build step needed when
-consumed under [Bun](https://bun.sh), which resolves the internal `.js`
-import specifiers to their `.ts` files. Installing the barrel registers all
-15 retailer sources as a side effect, so `runScan()` works without any setup.
+Install from npm (works with any runtime — Bun, Node ≥24, pnpm, yarn):
 
 ```bash
-# From another Bun project on the same machine — install from a local checkout
-bun add local-ai-scanner-cli@file:../local-ai-scanner-cli
-
-# …or from an absolute path
-bun add local-ai-scanner-cli@file:/Users/sero/ai/local-ai-web/local-ai-scanner-cli
+npm install local-ai-scanner-cli
+# or
+bun add local-ai-scanner-cli
 ```
 
-> **Installing from GitHub?** The repo is currently private, and Bun 1.3.x
-> fetches GitHub dependencies via the unauthenticated API tarball endpoint —
-> which 404s on private repos. To install via `@github:`, either make the repo
-> public or publish to npm (the `package.json` metadata is already prepped for
-> a build-and-publish step).
+The npm package ships compiled JavaScript (`dist/`) plus TypeScript types, so
+it runs under Node without a build step. Under Bun you can also install
+straight from GitHub (which serves the TypeScript source directly — Bun
+resolves the internal `.js` import specifiers to their `.ts` files):
+
+```bash
+bun add local-ai-scanner-cli@github:0xSero/local-ai-scanner-cli
+```
+
+Importing the barrel registers all 15 retailer sources as a side effect, so
+`runScan()` works without any setup.
 
 ```ts
 import { runScan } from "local-ai-scanner-cli";
@@ -90,12 +91,15 @@ import {
 > a hung source fails fast and is recorded in `snapshot.errors` rather than
 > blocking the scan.
 
-## bunx CLI
+## CLI usage
 
-Once installed, run the CLI from any Bun project without invoking `tsx`:
+Once installed, run the CLI without invoking `tsx` — `bunx` (Bun) or `npx`
+(Node), or the bare binary if installed globally:
 
 ```bash
 bunx local-ai-scanner-cli scan --category gpu
+# or under Node:
+npx local-ai-scanner-cli scan --category gpu
 bunx local-ai-scanner-cli prices --category gpu --region US
 bunx local-ai-scanner-cli sources
 ```

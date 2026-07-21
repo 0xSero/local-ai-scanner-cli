@@ -17,12 +17,16 @@
   "files": [
     "src/",
     "lib/",
-    "cache/latest.json",
-    "README.md"
+    "dist/",
+    "README.md",
+    "LICENSE"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/0xSero/local-ai-scanner-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/0xSero/local-ai-scanner-cli/issues"
   },
   "scripts": {
     "scan": "tsx src/cli.ts scan",
@@ -32,8 +36,23 @@
     "scan:apple": "tsx src/cli.ts scan --category apple",
     "scan:memory": "tsx src/cli.ts scan --category memory",
     "scan:amd": "tsx src/cli.ts scan --category amd",
+    "build": "tsc -p tsconfig.build.json",
+    "prepublishOnly": "tsc -p tsconfig.build.json",
     "test": "bun test",
     "typecheck": "tsc --noEmit"
+  },
+  "publishConfig": {
+    "main": "./dist/src/index.js",
+    "types": "./dist/src/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/src/index.d.ts",
+        "default": "./dist/src/index.js"
+      },
+      "./package.json": "./package.json"
+    },
+    "bin": "./dist/src/bin.js",
+    "access": "public"
   },
   "dependencies": {
     "cheerio": "^1.0.7",

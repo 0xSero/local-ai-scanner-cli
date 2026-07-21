@@ -5,6 +5,7 @@ node_modules/
 web/.next/
 web/tsconfig.tsbuildinfo
 *.tsbuildinfo
+dist/
 
 # Cache archives (keep latest.json, drop timestamped copies)
 cache/snapshot-*.json
