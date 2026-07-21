@@ -32,11 +32,13 @@ jobs:
         with:
           fetch-depth: 0
 
+      # No registry-url here on purpose: semantic-release's npm plugin writes
+      # its own .npmrc from NPM_TOKEN. Setting registry-url would make
+      # setup-node emit a competing .npmrc keyed on NODE_AUTH_TOKEN (E401).
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 24
-          registry-url: https://registry.npmjs.org/
 
       # Install the package's own deps + devDeps so the npm plugin's
       # prepublishOnly build (tsc → dist/) has typescript available.
