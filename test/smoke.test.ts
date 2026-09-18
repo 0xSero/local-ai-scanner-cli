@@ -37,16 +37,17 @@ test("barrel re-exports the public API", () => {
 });
 
 test("catalog constants match the source of truth", () => {
-  expect(PRODUCTS).toHaveLength(43);
-  expect(REGIONS).toHaveLength(5);
+  expect(PRODUCTS).toHaveLength(56);
+  expect(REGIONS).toHaveLength(28);
   expect(productsByCategory("gpu")).toHaveLength(20);
   expect(productsByCategory("apple")).toHaveLength(16);
   expect(productsByCategory("amd")).toHaveLength(2);
   expect(productsByCategory("memory")).toHaveLength(5);
+  expect(productsByCategory("laptop")).toHaveLength(13);
 });
 
-test("importing the barrel registers all 15 retailer sources", () => {
-  expect(allSources()).toHaveLength(15);
+test("importing the barrel registers all 18 retailer sources", () => {
+  expect(allSources()).toHaveLength(18);
 });
 
 test("pure helpers behave on empty input", () => {

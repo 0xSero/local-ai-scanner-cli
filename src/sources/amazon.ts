@@ -39,11 +39,11 @@ const DOMAINS: Record<string, string> = {
  * past a $400 threshold.
  */
 const MIN_PRICE: Record<string, Record<string, number>> = {
-  USD: { gpu: 150, apple: 400, memory: 30, amd: 500 },
-  EUR: { gpu: 140, apple: 380, memory: 25, amd: 450 },
-  GBP: { gpu: 120, apple: 320, memory: 22, amd: 400 },
-  JPY: { gpu: 20000, apple: 60000, memory: 4000, amd: 75000 },
-  PLN: { gpu: 600, apple: 1600, memory: 120, amd: 2000 },
+  USD: { gpu: 150, apple: 400, memory: 30, amd: 500, laptop: 500 },
+  EUR: { gpu: 140, apple: 380, memory: 25, amd: 450, laptop: 480 },
+  GBP: { gpu: 120, apple: 320, memory: 22, amd: 400, laptop: 420 },
+  JPY: { gpu: 20000, apple: 60000, memory: 4000, amd: 75000, laptop: 70000 },
+  PLN: { gpu: 600, apple: 1600, memory: 120, amd: 2000, laptop: 2000 },
 };
 
 /**
@@ -297,6 +297,6 @@ export const amazonSource: Source = {
   id: "amazon",
   name: "Amazon",
   regions: ["US", "DE", "GB", "JP", "PL"],
-  categories: ["gpu", "apple", "memory", "amd"],
+  categories: ["gpu", "apple", "memory", "amd", "laptop"],
   scan: (products, ctx) => scanAmazon(products, ctx.regionCode),
 };

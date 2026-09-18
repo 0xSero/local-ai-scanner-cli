@@ -1,8 +1,8 @@
 # local-ai-scanner-cli
 
 Cached hardware price scanner for [local.ai](https://local.ai). Pulls current
-market prices for GPUs, Apple Silicon, AMD Strix Halo, and memory across 5
-regions and 15 retailers, caches them as a JSON snapshot, and serves a matching
+market prices for GPUs, Apple Silicon, AMD Strix Halo, memory, and laptops
+across 28 regions and 18 sources, caches them as a JSON snapshot, and serves a matching
 Next.js website. Data is exported as CSV + JSON for exploration.
 
 ## Quick start
@@ -50,7 +50,7 @@ resolves the internal `.js` import specifiers to their `.ts` files):
 bun add local-ai-scanner-cli@github:0xSero/local-ai-scanner-cli
 ```
 
-Importing the barrel registers all 15 retailer sources as a side effect, so
+Importing the barrel registers all 18 retailer sources as a side effect, so
 `runScan()` works without any setup.
 
 ```ts
@@ -202,7 +202,7 @@ console.log(evo.snapshotsAnalyzed, "snapshots;", Object.keys(evo.products).lengt
 
 | Command | What it does |
 | --- | --- |
-| `scan [--category gpu,apple,amd,memory] [--region US,DE,GB,JP,PL]` | Fetches current prices from all sources and caches a snapshot |
+| `scan [--category gpu,apple,amd,memory,laptop] [--region US,DE,GB,JP,PL]` | Fetches current prices from all sources and caches a snapshot |
 | `prices [--category <c>] [--region <r>] [--condition new\|refurbished\|used]` | Prints prices from the cached snapshot (no network) |
 | `export` | Exports the cached snapshot to `data/` as CSV + JSON |
 | `sources` | Lists configured data sources |
@@ -224,7 +224,7 @@ console.log(evo.snapshotsAnalyzed, "snapshots;", Object.keys(evo.products).lengt
 
 ## Data sources
 
-15 sources across 5 regions, accessed via plain HTTP GET (no API keys, no
+18 sources across 28 regions, accessed via plain HTTP GET (no API keys, no
 headless browser). Sources that block plain HTTP (eBay, Allegro, Micro Center,
 Newegg) are tracked and attempted every scan — failures are recorded in the
 snapshot's `errors` array.
@@ -232,39 +232,101 @@ snapshot's `errors` array.
 | Source | Region | Categories | Method |
 | --- | --- | --- | --- |
 | **Newegg** | US | GPU, memory, AMD | Embedded `window.__initialState__` JSON |
-| **Amazon** | US, DE, GB, JP, PL | All | HTML scraping with session cookies for currency |
+| **Amazon** | US, DE, GB, JP, PL | All (incl. laptop) | HTML scraping with session cookies for currency |
 | **Apple Store (new)** | US, DE, GB, JP, PL | Apple | Embedded chip-keyed price JSON on buy pages |
 | **Apple Refurbished** | US, DE, GB, JP, PL | Apple | Schema.org JSON-LD `Product` nodes |
-| **Alternate.de** | DE | GPU, memory | HTML scraping (`.price` spans, German format) |
+| **Alternate.de** | DE | GPU, memory, laptop | HTML scraping (`.price` spans, German format) |
 | **Minisforum Store** | US | AMD | Shopify `/products.json` |
 | **GMKtec Store** | US | AMD | Shopify `/products.json` |
 | **Crucial.com** | US, GB, DE, PL, JP | Memory | JSON-LD on product pages |
 | **AWD-IT** | GB | GPU, memory, AMD | Magento 2 HTML scraping (`.product-item`) |
 | **Ceneo** | PL | All | JSON-LD `ItemList` (price comparison aggregator) |
-| **Dospara** | JP | GPU, memory | Salesforce Commerce Cloud HTML scraping |
+| **Dospara** | JP | GPU, memory, AMD, laptop | Salesforce Commerce Cloud HTML scraping |
 | **eBay** | US, DE, GB, PL | All | HTML scraping (blocked by JS challenge) |
 | **Allegro** | PL | All | HTML scraping (blocked by DataDome) |
 | **Micro Center** | US | All | HTML scraping (blocked by Cloudflare Turnstile) |
 | **Yodobashi** | JP | All | HTML scraping (blocked at network level) |
+| **Morele.net** | PL | laptop | HTML scraping (`.cat-product` `data-product-*` attributes) |
+| **Lenovo Store** | GB, FR, IT, ES, NL, DE, AT, BE, CH, DK, FI, NO, SE, PT, IE, JP, CA, IN, SG, KR, TW, BR, MX, AU, NZ | laptop | Embedded JSON `"price"` + `<meta name="currencycode">` on PDPs |
+| **Dell Store** | AU, NZ, SG, CA, BR, DK, SE, CH | laptop | Server-rendered `data-product-detail` JSON (`dellPrice`) + `currency=` attr |
+
+Laptop coverage is honest-live, not universal. Working plain-HTTP laptop sources:
+the Lenovo vendor store (25 locales) and the Dell vendor store (8 locales)
+server-render prices and now anchor laptop coverage across the newly added
+markets; alongside them Morele (PL), Alternate.de (DE), Dospara (JP), and Amazon
+(US/DE — GB/JP/PL are intermittently Akamai/AWS-WAF challenged). GB's laptop
+coverage is the Lenovo store (Currys, Scan, Box, Ebuyer, laptopsdirect all block
+plain HTTP or render results in JS). Rejected during verification:
+mediaexpert.pl (403 Cloudflare), komputronik.pl search (JS SPA), cyberport.de /
+notebooksbilliger.de (403), currys.co.uk / scan.co.uk / box.co.uk / bhphotovideo.com
+/ adorama.com / newegg.com (403 Cloudflare/captcha), laptopsdirect.co.uk (JS-rendered
+search). Dospara returns mixed new/used stock all labeled `new` (inherited source
+behavior across all its categories).
 
 ## Regions
 
-| Region | Currency | Tracked suppliers |
-| --- | --- | --- |
-| **US** | USD | 9 (newegg, amazon, ebay, microcenter, apple-store, apple-refurbished, minisforum, gmktec, crucial) |
-| **DE** | EUR | 6 (alternate, amazon, ebay, apple-store, apple-refurbished, crucial) |
-| **GB** | GBP | 6 (amazon, ebay, apple-store, apple-refurbished, crucial, awd-it) |
-| **JP** | JPY | 6 (amazon, apple-store, apple-refurbished, yodobashi, dospara, crucial) |
-| **PL** | PLN | 7 (allegro, amazon, ebay, apple-store, apple-refurbished, crucial, ceneo) |
+28 markets. The five original markets each have >=5 distinct suppliers. The 23
+markets added later are covered only by the vendor-official stores (Apple,
+Lenovo, Dell) that publish prices over plain HTTP, so they carry fewer than
+five suppliers and are flagged **partial** — the scanner does not pretend a
+market has depth it doesn't. A market is only listed once a vendor store was
+live-verified (2026-09-18) to return a real price for it.
+
+| Region | Currency | Suppliers | Partial |
+| --- | --- | --- | --- |
+| **US** | USD | 9 (newegg, amazon, ebay, microcenter, apple-store, apple-refurbished, minisforum, gmktec, crucial) | |
+| **DE** | EUR | 7 (alternate, amazon, ebay, apple-store, apple-refurbished, crucial, lenovo) | |
+| **GB** | GBP | 7 (amazon, ebay, apple-store, apple-refurbished, crucial, awd-it, lenovo) | |
+| **JP** | JPY | 7 (amazon, apple-store, apple-refurbished, yodobashi, dospara, crucial, lenovo) | |
+| **PL** | PLN | 8 (allegro, amazon, ebay, apple-store, apple-refurbished, crucial, ceneo, morele) | |
+| **FR** | EUR | 3 (apple-store, apple-refurbished, lenovo) | ✓ no dell-store; no marketplace/retail |
+| **ES** | EUR | 3 (apple-store, apple-refurbished, lenovo) | ✓ no dell-store; no marketplace/retail |
+| **IT** | EUR | 3 (apple-store, apple-refurbished, lenovo) | ✓ no dell-store; no marketplace/retail |
+| **NL** | EUR | 3 (apple-store, apple-refurbished, lenovo) | ✓ no dell-store; no marketplace/retail |
+| **SE** | SEK | 3 (apple-store, lenovo, dell-store) | ✓ no apple-refurbished; no marketplace/retail |
+| **AU** | AUD | 4 (apple-store, apple-refurbished, lenovo, dell-store) | ✓ no marketplace/retail |
+| **CA** | CAD | 4 (apple-store, apple-refurbished, lenovo, dell-store) | ✓ no marketplace/retail |
+| **IN** | INR | 2 (apple-store, lenovo) | ✓ no apple-refurbished, no dell-store; no marketplace/retail |
+| **BR** | BRL | 3 (apple-store, lenovo, dell-store) | ✓ no apple-refurbished; no marketplace/retail |
+| **MX** | MXN | 2 (apple-store, lenovo) | ✓ no apple-refurbished, no dell-store; no marketplace/retail |
+| **AE** | AED | 1 (apple-store) | ✓ no apple-refurbished, no lenovo, no dell-store; no marketplace/retail |
+| **SG** | SGD | 4 (apple-store, apple-refurbished, lenovo, dell-store) | ✓ no marketplace/retail |
+| **KR** | KRW | 3 (apple-store, apple-refurbished, lenovo) | ✓ no dell-store; no marketplace/retail |
+| **TW** | TWD | 3 (apple-store, apple-refurbished, lenovo) | ✓ no dell-store; no marketplace/retail |
+| **CH** | CHF | 3 (apple-store, lenovo, dell-store) | ✓ no apple-refurbished; no marketplace/retail |
+| **AT** | EUR | 3 (apple-store, apple-refurbished, lenovo) | ✓ no dell-store; no marketplace/retail |
+| **BE** | EUR | 2 (apple-store, lenovo) | ✓ no apple-refurbished, no dell-store; no marketplace/retail |
+| **DK** | DKK | 3 (apple-store, lenovo, dell-store) | ✓ no apple-refurbished; no marketplace/retail |
+| **FI** | EUR | 2 (apple-store, lenovo) | ✓ no apple-refurbished, no dell-store; no marketplace/retail |
+| **NO** | NOK | 2 (apple-store, lenovo) | ✓ no apple-refurbished, no dell-store; no marketplace/retail |
+| **PT** | EUR | 2 (apple-store, lenovo) | ✓ no apple-refurbished, no dell-store; no marketplace/retail |
+| **IE** | EUR | 3 (apple-store, apple-refurbished, lenovo) | ✓ no dell-store; no marketplace/retail |
+| **NZ** | NZD | 4 (apple-store, apple-refurbished, lenovo, dell-store) | ✓ no marketplace/retail |
+
+### Blocked / excluded stores (live recon 2026-09-18)
+
+Verified unreachable over plain HTTP and therefore not added:
+
+- **Apple Store (new)** — `za` returns **404** (no Apple store in South Africa).
+- **Apple Refurbished** — **404** in `se, dk, fi, no, pt, in, br, mx, ae, za`
+  (`/shop/refurbished/mac/macbook-pro` does not exist there), so those regions
+  carry Apple *new* pricing only.
+- **Lenovo Store** — `pl, ae, za` return **HTTP 200** but a JS-only body with no
+  server-rendered `"price"`, so they are excluded.
+- **Dell Store** — `de/uk/fr/it/es/nl/no/ie/at/be/jp/kr/tw` return **HTTP 200**
+  with zero server-rendered prices; `en-in` **redirects** to a bot-challenged
+  third-party store; `es-mx, en-ae, pt-pt, fi-fi, en-za` **time out** (no
+  response within 15s). Only the 8 SSR locales above are added.
 
 ## Products tracked
 
-43 products across 4 categories:
+56 products across 5 categories:
 
 - **GPUs (20)**: RTX 5090–5070, RTX 4090–4060, RTX 3090–3060, RTX Pro 6000 Blackwell, RTX A6000, DGX Spark
 - **Apple Silicon (16)**: Mac Studio (M1/M2 Max & Ultra, M3 Ultra, M4 Max), Mac mini M4/M4 Pro, MacBook Pro (M1–M5, Pro & Max tiers)
 - **AMD (2)**: Framework Desktop (Ryzen AI Max 395+), Strix Halo Mini PC
 - **Memory (5)**: DDR5-5600 32/64GB, DDR4-3200 32GB, DDR4/DDR5 ECC 64GB RDIMM
+- **Laptops (13)**: Dell XPS 16/14/13 + Dell 16 Premium, MacBook Pro 14/16 (M5) + Air 15 M5, Framework 13/16, ThinkPad X1 Carbon G12, ASUS Zenbook 14 OLED, HP OmniBook X Flip, Razer Blade 16
 
 ## Architecture
 
@@ -272,7 +334,7 @@ snapshot's `errors` array.
 src/
   types.ts          # Domain types + Effect v4 Schema definitions
   products.ts       # Product catalog (43 products, 4 categories)
-  regions.ts        # Region definitions (5 regions with source mapping)
+  regions.ts        # Region definitions (28 regions with source mapping)
   source.ts         # Source interface + registry
   scan.ts           # Scan orchestrator (runs sources, builds snapshot)
   stats.ts          # Per-product aggregate stats (per-currency)
@@ -280,7 +342,7 @@ src/
   http.ts           # HTTP fetch helper (desktop UA, retry)
   format.ts         # CLI table + currency formatting
   export-data.ts    # Export to data/ as CSV + JSON
-  cli.ts            # CLI entry point (scan / prices / sources) — tsx shebang
+  cli.ts            # CLI entry point (scan / prices / sources / export / history) — tsx shebang
   bin.ts            # bunx entry point — Bun shebang, loads cli.ts
   index.ts          # Library barrel — re-exports the public API + registers sources
   sources/
@@ -288,7 +350,8 @@ src/
     apple-refurbished.ts  alternate.ts    shopify.ts
     crucial.ts      awd-it.ts         ceneo.ts
     dospara.ts      ebay.ts           allegro.ts
-    microcenter.ts  yodobashi.ts      index.ts
+    microcenter.ts  yodobashi.ts      morele.ts
+    index.ts
 
 lib/
   effect.ts         # Single entry point for Effect v4 (Schema, Effect, Data)

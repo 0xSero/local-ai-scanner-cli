@@ -11,7 +11,9 @@
  * so we brace-match each chip sub-object individually rather than parsing the
  * whole block. No anti-bot; plain HTTP GET works across ~40 country stores.
  *
- * Country prefixes: US → (none), DE → /de, GB → /uk, JP → /jp.
+ * Country path segments usually equal the country code, but not always: the
+ * store path is not the ISO code for `gb` (→ /uk), `ch` (→ /ch-de), and
+ * `be` (→ /be-fr). US has no prefix. See COUNTRY_PREFIX for the full map.
  *
  * Only current-gen chips appear on the new store. Discontinued chips (M1/M2
  * Max, M1/M2 Ultra) yield no listings here — they're handled by the
@@ -29,6 +31,29 @@ const COUNTRY_PREFIX: Record<string, string> = {
   GB: "/uk",
   JP: "/jp",
   PL: "/pl",
+  FR: "/fr",
+  ES: "/es",
+  IT: "/it",
+  NL: "/nl",
+  SE: "/se",
+  AU: "/au",
+  CA: "/ca",
+  IN: "/in",
+  BR: "/br",
+  MX: "/mx",
+  AE: "/ae",
+  SG: "/sg",
+  KR: "/kr",
+  TW: "/tw",
+  CH: "/ch-de",
+  AT: "/at",
+  BE: "/be-fr",
+  DK: "/dk",
+  FI: "/fi",
+  NO: "/no",
+  PT: "/pt",
+  IE: "/ie",
+  NZ: "/nz",
 };
 
 interface ChipPrice {
@@ -209,7 +234,7 @@ async function scanAppleStore(regionCode: string): Promise<SourceResult> {
 export const appleStoreSource: Source = {
   id: "apple-store",
   name: "Apple Store (new)",
-  regions: ["US", "DE", "GB", "JP", "PL"],
+  regions: Object.keys(COUNTRY_PREFIX),
   categories: ["apple"],
   scan: (_products, ctx) => scanAppleStore(ctx.regionCode),
 };

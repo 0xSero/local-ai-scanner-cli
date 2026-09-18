@@ -11,6 +11,7 @@
  *   data/snapshot.json  — the full snapshot (listings + summaries + errors)
  */
 import { readFileSync, writeFileSync, mkdirSync } from "fs";
+import { pathToFileURL } from "url";
 import type { PriceListing, ProductPriceSummary, SourceError } from "./types.js";
 
 type CsvValue = string | number | boolean | null | undefined;
@@ -28,7 +29,7 @@ function toCsv(rows: CsvValue[][]): string {
   return rows.map((row) => row.map(csvEscape).join(",")).join("\n");
 }
 
-async function main() {
+export async function exportData() {
   mkdirSync("data", { recursive: true });
 
   const snap = JSON.parse(readFileSync("cache/latest.json", "utf8"));
@@ -88,4 +89,7 @@ async function main() {
   console.log(`\n✓ Exported ${listings.length} listings, ${summaries.length} summaries, ${errors.length} errors`);
 }
 
-main();
+// Run directly (`tsx src/export-data.ts`) — but not when imported by the CLI.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  exportData();
+}

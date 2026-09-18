@@ -25,6 +25,18 @@ const COUNTRY_PREFIX: Record<string, string> = {
   GB: "/uk",
   JP: "/jp",
   PL: "/pl",
+  FR: "/fr",
+  ES: "/es",
+  IT: "/it",
+  NL: "/nl",
+  AU: "/au",
+  CA: "/ca",
+  SG: "/sg",
+  KR: "/kr",
+  TW: "/tw",
+  AT: "/at",
+  IE: "/ie",
+  NZ: "/nz",
 };
 
 interface RefurbOffer {
@@ -162,7 +174,7 @@ async function scanAppleRefurb(regionCode: string): Promise<SourceResult> {
 export const appleRefurbishedSource: Source = {
   id: "apple-refurbished",
   name: "Apple Certified Refurbished",
-  regions: ["US", "DE", "GB", "JP", "PL"],
+  regions: Object.keys(COUNTRY_PREFIX),
   categories: ["apple"],
   scan: (_products, ctx) => scanAppleRefurb(ctx.regionCode),
 };

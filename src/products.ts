@@ -396,6 +396,182 @@ export const PRODUCTS: AppleProduct[] = [
     manufacturer: "Various",
     queries: { newegg: "DDR5 ECC 64GB RDIMM", amazon: "DDR5 ECC 64GB RDIMM" },
   },
+
+  // ── Laptops ────────────────────────────────────────────────────────────
+  // Queries are keyed by source id: `amazon` (English), `morele` (Polish),
+  // `alternate` (German market), `dospara` (Japanese market). Dell machines
+  // use their service-tag model codes (DA16260 etc.) because vendor and
+  // Dell-carrying retailers index by them. queryFor falls back to the product
+  // name for any source without an explicit key.
+  {
+    id: "dell-xps-16-da16260",
+    name: "Dell XPS 16 (DA16260, Core Ultra X7 358H, 3.2K OLED)",
+    category: "laptop",
+    manufacturer: "Dell",
+    queries: {
+      amazon: "Dell XPS 16",
+      morele: "laptop Dell XPS 16 DA16260",
+      alternate: "Dell XPS 16 Core Ultra 358H",
+      dospara: "Dell XPS 16",
+    },
+    minPriceUsd: 2000,
+  },
+  {
+    id: "dell-16-premium-da16250",
+    name: "Dell 16 Premium (DA16250, RTX 5070 8GB, 4K OLED)",
+    category: "laptop",
+    manufacturer: "Dell",
+    queries: {
+      amazon: "Dell 16 Premium RTX 5070",
+      morele: "laptop Dell 16 Premium DA16250",
+      alternate: "Dell 16 Premium RTX 5070",
+      dospara: "Dell 16 Premium",
+    },
+    minPriceUsd: 2400,
+  },
+  {
+    id: "dell-xps-14-da14260",
+    name: "Dell XPS 14 (DA14260)",
+    category: "laptop",
+    manufacturer: "Dell",
+    queries: {
+      amazon: "Dell XPS 14",
+      morele: "laptop Dell XPS 14 DA14260",
+      alternate: "Dell XPS 14 Core Ultra",
+      dospara: "Dell XPS 14",
+    },
+    minPriceUsd: 1700,
+  },
+  {
+    id: "dell-xps-13-dx13260",
+    name: "Dell XPS 13 (DX13260)",
+    category: "laptop",
+    manufacturer: "Dell",
+    queries: {
+      amazon: "Dell XPS 13",
+      morele: "laptop Dell XPS 13 DX13260",
+      alternate: "Dell XPS 13 Core Ultra",
+      dospara: "Dell XPS 13",
+    },
+    minPriceUsd: 1300,
+  },
+  {
+    id: "macbook-pro-14-m5-pro",
+    name: "MacBook Pro 14 (M5 Pro)",
+    category: "laptop",
+    manufacturer: "Apple",
+    queries: {
+      amazon: "MacBook Pro 14 M5 Pro",
+      morele: "laptop Apple MacBook Pro 14 M5 Pro",
+      alternate: "Apple MacBook Pro 14 M5 Pro",
+      dospara: "MacBook Pro 14 M5",
+    },
+    minPriceUsd: 1999,
+  },
+  {
+    id: "macbook-pro-16-m5-max",
+    name: "MacBook Pro 16 (M5 Max)",
+    category: "laptop",
+    manufacturer: "Apple",
+    queries: {
+      amazon: "MacBook Pro 16 M5 Max",
+      morele: "laptop Apple MacBook Pro 16 M5 Max",
+      alternate: "Apple MacBook Pro 16 M5 Max",
+      dospara: "MacBook Pro 16 M5",
+    },
+    minPriceUsd: 3499,
+  },
+  {
+    id: "macbook-air-15-m5",
+    name: "MacBook Air 15 (M5)",
+    category: "laptop",
+    manufacturer: "Apple",
+    queries: {
+      amazon: "MacBook Air 15 M5",
+      morele: "laptop Apple MacBook Air 15 M5",
+      alternate: "Apple MacBook Air 15 M5",
+      dospara: "MacBook Air 15 M5",
+    },
+    minPriceUsd: 1299,
+  },
+  {
+    id: "framework-13",
+    name: "Framework Laptop 13",
+    category: "laptop",
+    manufacturer: "Framework",
+    queries: {
+      amazon: "Framework Laptop 13",
+      morele: "laptop Framework 13",
+      alternate: "Framework Laptop 13",
+      dospara: "Framework Laptop 13",
+    },
+    minPriceUsd: 1000,
+  },
+  {
+    id: "framework-16",
+    name: "Framework Laptop 16",
+    category: "laptop",
+    manufacturer: "Framework",
+    queries: {
+      amazon: "Framework Laptop 16",
+      morele: "laptop Framework 16",
+      alternate: "Framework Laptop 16",
+      dospara: "Framework Laptop 16",
+    },
+    minPriceUsd: 1600,
+  },
+  {
+    id: "lenovo-thinkpad-x1-carbon-g12",
+    name: "Lenovo ThinkPad X1 Carbon Gen 12",
+    category: "laptop",
+    manufacturer: "Lenovo",
+    queries: {
+      amazon: "Lenovo ThinkPad X1 Carbon Gen 12",
+      morele: "laptop Lenovo ThinkPad X1 Carbon Gen 12",
+      alternate: "Lenovo ThinkPad X1 Carbon G12",
+      dospara: "ThinkPad X1 Carbon",
+    },
+    minPriceUsd: 1700,
+  },
+  {
+    id: "asus-zenbook-14-oled",
+    name: "ASUS Zenbook 14 OLED",
+    category: "laptop",
+    manufacturer: "ASUS",
+    queries: {
+      amazon: "ASUS Zenbook 14 OLED",
+      morele: "laptop Asus Zenbook 14 OLED",
+      alternate: "Asus Zenbook 14 OLED",
+      dospara: "ASUS Zenbook 14 OLED",
+    },
+    minPriceUsd: 1000,
+  },
+  {
+    id: "hp-omnibook-x-flip",
+    name: "HP OmniBook X Flip",
+    category: "laptop",
+    manufacturer: "HP",
+    queries: {
+      amazon: "HP OmniBook X Flip",
+      morele: "laptop HP OmniBook X Flip",
+      alternate: "HP OmniBook X Flip",
+      dospara: "HP OmniBook X Flip",
+    },
+    minPriceUsd: 1100,
+  },
+  {
+    id: "razer-blade-16",
+    name: "Razer Blade 16",
+    category: "laptop",
+    manufacturer: "Razer",
+    queries: {
+      amazon: "Razer Blade 16",
+      morele: "laptop Razer Blade 16",
+      alternate: "Razer Blade 16",
+      dospara: "Razer Blade 16",
+    },
+    minPriceUsd: 2699,
+  },
 ];
 
 /** Find a product by id. */

@@ -19,6 +19,7 @@
  */
 import { runScan } from "./scan.js";
 import { readLatest } from "./cache.js";
+import { exportData } from "./export-data.js";
 import { buildPriceEvolution } from "./history.js";
 import { PRODUCTS, productsByCategory } from "./products.js";
 import { REGIONS } from "./regions.js";
@@ -29,7 +30,7 @@ import type { HardwareCategory, Condition } from "./types.js";
 // Importing source modules registers them via registerSource().
 import "./sources/index.js";
 
-const CATEGORIES: HardwareCategory[] = ["gpu", "apple", "amd", "memory"];
+const CATEGORIES: HardwareCategory[] = ["gpu", "apple", "amd", "memory", "laptop"];
 
 function parseArgs(argv: string[]): Record<string, string | undefined> {
   const out: Record<string, string | undefined> = {};
@@ -55,6 +56,8 @@ async function main() {
       return cmdPrices(args);
     case "sources":
       return cmdSources();
+    case "export":
+      return exportData();
     case "history":
       return cmdHistory(args);
     default:
@@ -179,7 +182,7 @@ function printHelp() {
   console.log(`local-ai-scanner — cached hardware price scanner
 
 Commands:
-  scan    [--category gpu,apple,amd,memory] [--region US,DE,GB,JP]
+  scan    [--category gpu,apple,amd,memory,laptop] [--region US,DE,GB,JP,PL]
           Fetch current prices from all sources and cache a snapshot.
 
   prices  [--category <c>] [--region <r>] [--condition new|refurbished|used]
@@ -187,6 +190,9 @@ Commands:
 
   sources
           List configured data sources.
+
+  export
+          Export the cached snapshot to data/ as CSV + JSON.
 
   history [--cacheDir <path>]
           Print price evolution as JSON — per-product price history across

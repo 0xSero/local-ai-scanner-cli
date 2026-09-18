@@ -12,7 +12,7 @@
 import { Schema } from "../lib/effect.js";
 
 /** Top-level hardware categories the scanner tracks. */
-export type HardwareCategory = "gpu" | "apple" | "amd" | "memory";
+export type HardwareCategory = "gpu" | "apple" | "amd" | "memory" | "laptop";
 
 /** Whether a listing is brand-new, refurbished, or second-hand used. */
 export type Condition = "new" | "refurbished" | "used";
@@ -38,7 +38,7 @@ export const RegionSchema = Schema.Struct({
   currency: Schema.String,
 });
 
-export const HardwareCategorySchema = Schema.Literals(["gpu", "apple", "amd", "memory"]);
+export const HardwareCategorySchema = Schema.Literals(["gpu", "apple", "amd", "memory", "laptop"]);
 
 export const ConditionSchema = Schema.Literals(["new", "refurbished", "used"]);
 

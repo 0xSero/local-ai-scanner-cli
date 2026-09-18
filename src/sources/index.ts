@@ -18,6 +18,9 @@ import { yodobashiSource } from "./yodobashi.js";
 import { dosparaSource } from "./dospara.js";
 import { awdItSource } from "./awd-it.js";
 import { ceneoSource } from "./ceneo.js";
+import { moreleSource } from "./morele.js";
+import { lenovoSource } from "./lenovo.js";
+import { dellStoreSource } from "./dell-store.js";
 
 registerSource(neweggSource);
 registerSource(amazonSource);
@@ -34,3 +37,6 @@ registerSource(yodobashiSource);
 registerSource(dosparaSource);
 registerSource(awdItSource);
 registerSource(ceneoSource);
+registerSource(moreleSource);
+registerSource(lenovoSource);
+registerSource(dellStoreSource);

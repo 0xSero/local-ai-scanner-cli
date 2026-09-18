@@ -121,6 +121,6 @@ export const dosparaSource: Source = {
   id: "dospara",
   name: "Dospara",
   regions: ["JP"],
-  categories: ["gpu", "memory", "amd"],
+  categories: ["gpu", "memory", "amd", "laptop"],
   scan: (products, ctx) => scanDospara(products, ctx.regionCode),
 };

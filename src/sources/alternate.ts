@@ -134,6 +134,6 @@ export const alternateSource: Source = {
   id: "alternate",
   name: "Alternate.de",
   regions: ["DE"],
-  categories: ["gpu", "memory"],
+  categories: ["gpu", "memory", "laptop"],
   scan: (products, ctx) => scanAlternate(products, ctx.regionCode),
 };
