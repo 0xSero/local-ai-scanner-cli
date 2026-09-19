@@ -312,6 +312,136 @@ export const PRODUCTS: AppleProduct[] = [
     minPriceUsd: 3000,
   },
 
+  // ── NVIDIA GPUs — datacenter (Hopper / Blackwell) ───────────────────────
+  // These reach buyers through channel partners rather than a vendor list price,
+  // but Newegg, Amazon and eBay all carry them, so they are priceable.
+  {
+    id: "h100",
+    name: "H100",
+    category: "gpu",
+    manufacturer: "NVIDIA",
+    queries: {
+      newegg: "H100 80GB",
+      amazon: "NVIDIA H100 80GB",
+      ebay: "NVIDIA H100 80GB PCIe",
+      ceneo: "NVIDIA H100",
+    },
+    minPriceUsd: 8000,
+  },
+  {
+    id: "h200",
+    name: "H200",
+    category: "gpu",
+    manufacturer: "NVIDIA",
+    queries: {
+      newegg: "H200 141GB",
+      amazon: "NVIDIA H200 141GB",
+      ebay: "NVIDIA H200 141GB",
+      ceneo: "NVIDIA H200",
+    },
+    minPriceUsd: 10000,
+  },
+  {
+    id: "a100",
+    name: "A100",
+    category: "gpu",
+    manufacturer: "NVIDIA",
+    queries: {
+      newegg: "A100 80GB",
+      amazon: "NVIDIA A100 80GB",
+      ebay: "NVIDIA A100 80GB",
+      ceneo: "NVIDIA A100",
+    },
+    minPriceUsd: 3000,
+  },
+  {
+    id: "l40s",
+    name: "L40S",
+    category: "gpu",
+    manufacturer: "NVIDIA",
+    queries: {
+      newegg: "L40S 48GB",
+      amazon: "NVIDIA L40S 48GB",
+      ebay: "NVIDIA L40S 48GB",
+      ceneo: "NVIDIA L40S",
+    },
+    minPriceUsd: 3000,
+  },
+  {
+    id: "rtx-pro-5000-blackwell",
+    name: "RTX PRO 5000 Blackwell",
+    category: "gpu",
+    manufacturer: "NVIDIA",
+    queries: {
+      newegg: "RTX PRO 5000 Blackwell",
+      amazon: "RTX PRO 5000 Blackwell 48GB",
+      ebay: "RTX PRO 5000 Blackwell",
+      ceneo: "RTX PRO 5000 Blackwell",
+    },
+    minPriceUsd: 3000,
+  },
+  {
+    id: "gb200",
+    name: "GB200",
+    category: "gpu",
+    manufacturer: "NVIDIA",
+    queries: {
+      amazon: "NVIDIA GB200",
+      ebay: "NVIDIA GB200 NVL72",
+    },
+    minPriceUsd: 40000,
+  },
+  {
+    id: "mi325x",
+    name: "Instinct MI325X",
+    category: "gpu",
+    manufacturer: "AMD",
+    queries: {
+      amazon: "AMD Instinct MI325X",
+      ebay: "AMD Instinct MI325X 256GB",
+    },
+    minPriceUsd: 8000,
+  },
+  {
+    id: "gaudi-3",
+    name: "Gaudi 3",
+    category: "gpu",
+    manufacturer: "Intel",
+    queries: {
+      amazon: "Intel Gaudi 3",
+      ebay: "Intel Gaudi 3 HL-338",
+    },
+    minPriceUsd: 5000,
+  },
+
+  // ── NVIDIA — Jetson embedded ────────────────────────────────────────────
+  {
+    id: "jetson-agx-thor",
+    name: "Jetson AGX Thor Developer Kit",
+    category: "gpu",
+    manufacturer: "NVIDIA",
+    queries: {
+      amazon: "NVIDIA Jetson AGX Thor Developer Kit",
+      newegg: "Jetson AGX Thor",
+      ebay: "Jetson AGX Thor Developer Kit",
+      ceneo: "Jetson AGX Thor",
+    },
+    minPriceUsd: 2000,
+  },
+  {
+    id: "jetson-orin-agx",
+    name: "Jetson AGX Orin Developer Kit",
+    category: "gpu",
+    manufacturer: "NVIDIA",
+    queries: {
+      amazon: "NVIDIA Jetson AGX Orin 64GB",
+      newegg: "Jetson AGX Orin",
+      ebay: "Jetson AGX Orin 64GB",
+      ceneo: "Jetson AGX Orin",
+    },
+    minPriceUsd: 1000,
+  },
+
   // ── AMD GPUs — Radeon / Instinct ───────────────────────────────────────
   {
     id: "rx-9070-xt",
@@ -326,6 +456,34 @@ export const PRODUCTS: AppleProduct[] = [
       "awd-it": "RX 9070 XT",
     },
     minPriceUsd: 550,
+  },
+  {
+    id: "rx-9070",
+    name: "Radeon RX 9070",
+    category: "gpu",
+    manufacturer: "AMD",
+    queries: {
+      newegg: "RX 9070",
+      amazon: "RX 9070",
+      alternate: "RX 9070",
+      ceneo: "RX 9070",
+      "awd-it": "RX 9070",
+    },
+    minPriceUsd: 500,
+  },
+  {
+    id: "rx-9060-xt",
+    name: "Radeon RX 9060 XT",
+    category: "gpu",
+    manufacturer: "AMD",
+    queries: {
+      newegg: "RX 9060 XT 16GB",
+      amazon: "RX 9060 XT 16GB",
+      alternate: "RX 9060 XT",
+      ceneo: "RX 9060 XT",
+      "awd-it": "RX 9060 XT",
+    },
+    minPriceUsd: 300,
   },
   {
     id: "rx-7900-xtx",
@@ -397,6 +555,48 @@ export const PRODUCTS: AppleProduct[] = [
       "awd-it": "Arc Pro B60",
     },
     minPriceUsd: 450,
+  },
+  {
+    id: "arc-b580",
+    name: "Intel Arc B580",
+    category: "gpu",
+    manufacturer: "Intel",
+    queries: {
+      newegg: "Arc B580",
+      amazon: "Intel Arc B580",
+      alternate: "Arc B580",
+      ceneo: "Arc B580",
+      "awd-it": "Arc B580",
+    },
+    minPriceUsd: 200,
+  },
+  {
+    id: "arc-b570",
+    name: "Intel Arc B570",
+    category: "gpu",
+    manufacturer: "Intel",
+    queries: {
+      newegg: "Arc B570",
+      amazon: "Intel Arc B570",
+      alternate: "Arc B570",
+      ceneo: "Arc B570",
+      "awd-it": "Arc B570",
+    },
+    minPriceUsd: 170,
+  },
+  {
+    id: "arc-a770",
+    name: "Intel Arc A770",
+    category: "gpu",
+    manufacturer: "Intel",
+    queries: {
+      newegg: "Arc A770",
+      amazon: "Intel Arc A770",
+      alternate: "Arc A770",
+      ceneo: "Arc A770",
+      "awd-it": "Arc A770",
+    },
+    minPriceUsd: 180,
   },
 
   // ── Apple Silicon — Mac Studio ─────────────────────────────────────────
@@ -875,6 +1075,75 @@ export const PRODUCTS: AppleProduct[] = [
       dospara: "Razer Blade 16 RTX 5080",
     },
     minPriceUsd: 1500,
+  },
+
+  // ── Laptop GPUs ────────────────────────────────────────────────────────
+  // Sold as a configured machine, so the listing is the laptop rather than a
+  // card; the query names the GPU because that is what buyers search for.
+  {
+    id: "rtx-5090-laptop",
+    name: "RTX 5090 Laptop",
+    category: "laptop",
+    manufacturer: "NVIDIA",
+    queries: {
+      amazon: "RTX 5090 laptop",
+      morele: "laptop RTX 5090",
+      alternate: "RTX 5090 Laptop",
+      dospara: "RTX 5090 ノートPC",
+    },
+    minPriceUsd: 2000,
+  },
+  {
+    id: "rtx-5080-laptop",
+    name: "RTX 5080 Laptop",
+    category: "laptop",
+    manufacturer: "NVIDIA",
+    queries: {
+      amazon: "RTX 5080 laptop",
+      morele: "laptop RTX 5080",
+      alternate: "RTX 5080 Laptop",
+      dospara: "RTX 5080 ノートPC",
+    },
+    minPriceUsd: 1500,
+  },
+  {
+    id: "rtx-4090-laptop",
+    name: "RTX 4090 Laptop",
+    category: "laptop",
+    manufacturer: "NVIDIA",
+    queries: {
+      amazon: "RTX 4090 laptop",
+      morele: "laptop RTX 4090",
+      alternate: "RTX 4090 Laptop",
+      dospara: "RTX 4090 ノートPC",
+    },
+    minPriceUsd: 1200,
+  },
+  {
+    id: "rtx-5070-ti-laptop",
+    name: "RTX 5070 Ti Laptop",
+    category: "laptop",
+    manufacturer: "NVIDIA",
+    queries: {
+      amazon: "RTX 5070 Ti laptop",
+      morele: "laptop RTX 5070 Ti",
+      alternate: "RTX 5070 Ti Laptop",
+      dospara: "RTX 5070 Ti ノートPC",
+    },
+    minPriceUsd: 1100,
+  },
+  {
+    id: "rtx-4060-laptop",
+    name: "RTX 4060 Laptop",
+    category: "laptop",
+    manufacturer: "NVIDIA",
+    queries: {
+      amazon: "RTX 4060 laptop",
+      morele: "laptop RTX 4060",
+      alternate: "RTX 4060 Laptop",
+      dospara: "RTX 4060 ノートPC",
+    },
+    minPriceUsd: 600,
   },
 ];
 
