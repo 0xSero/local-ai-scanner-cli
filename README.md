@@ -224,7 +224,7 @@ console.log(evo.snapshotsAnalyzed, "snapshots;", Object.keys(evo.products).lengt
 
 ## Data sources
 
-18 sources across 28 regions, accessed via plain HTTP GET (no API keys, no
+18 sources across 33 regions, accessed via plain HTTP GET (no API keys, no
 headless browser). Sources that block plain HTTP (Allegro, Micro Center, Newegg)
 are tracked and attempted every scan — failures are recorded in the snapshot's
 `errors` array. eBay gates some country sites behind a JS challenge but serves
@@ -242,7 +242,7 @@ same Amazon ASIN and costs more).
 | --- | --- | --- | --- |
 | **Newegg** | US | GPU, memory, AMD | Embedded `window.__initialState__` JSON |
 | **Amazon** | US, DE, GB, JP, PL, FR, IT, ES, NL, BE, SE, CA, MX, BR, AU, SG, AE, IN | All (incl. laptop) | HTML scraping with session cookies for currency |
-| **Apple Store (new)** | US, DE, GB, JP, PL | Apple | Embedded chip-keyed price JSON on buy pages |
+| **Apple Store (new)** | US, DE, GB, JP, PL, FR, IT, ES, NL, SE, AU, CA, IN, BR, MX, AE, SG, KR, TW, CH, AT, BE, DK, FI, NO, PT, IE, NZ, HK, TH, PH, MY, CL | Apple | Embedded chip-keyed price JSON on buy pages |
 | **Apple Refurbished** | US, DE, GB, JP, PL | Apple | Schema.org JSON-LD `Product` nodes |
 | **Alternate.de** | DE | GPU, memory, laptop | HTML scraping (`.price` spans, German format) |
 | **Minisforum Store** | US | AMD | Shopify `/products.json` |
@@ -251,12 +251,12 @@ same Amazon ASIN and costs more).
 | **AWD-IT** | GB | GPU, memory, AMD | Magento 2 HTML scraping (`.product-item`) |
 | **Ceneo** | PL | All | JSON-LD `ItemList` (price comparison aggregator) |
 | **Dospara** | JP | GPU, memory, AMD, laptop | Salesforce Commerce Cloud HTML scraping |
-| **eBay** | US, DE, GB, PL, AT, BE, CA, CH, ES, FR, IE, IT, NL, AU | All | HTML scraping (`s-card` title + price spans) |
+| **eBay** | US, DE, GB, PL, AT, BE, CA, CH, ES, FR, IE, IT, NL, AU, MY | All | HTML scraping (`s-card` title + price spans) |
 | **Allegro** | PL | All | HTML scraping (blocked by DataDome) |
 | **Micro Center** | US | All | HTML scraping (blocked by Cloudflare Turnstile) |
 | **Yodobashi** | JP | All | HTML scraping (blocked at network level) |
 | **Morele.net** | PL | laptop | HTML scraping (`.cat-product` `data-product-*` attributes) |
-| **Lenovo Store** | GB, FR, IT, ES, NL, DE, AT, BE, CH, DK, FI, NO, SE, PT, IE, JP, CA, IN, SG, KR, TW, BR, MX, AU, NZ | laptop | Embedded JSON `"price"` + `<meta name="currencycode">` on PDPs |
+| **Lenovo Store** | GB, FR, IT, ES, NL, DE, AT, BE, CH, DK, FI, NO, SE, PT, IE, JP, CA, IN, SG, KR, TW, BR, MX, AU, NZ, HK, TH, PH, MY, CL | laptop | Embedded JSON `"price"` + `<meta name="currencycode">` on PDPs |
 | **Dell Store** | AU, NZ, SG, CA, BR, DK, SE, CH | laptop | Server-rendered `data-product-detail` JSON (`dellPrice`) + `currency=` attr |
 
 Laptop coverage is honest-live, not universal. Working plain-HTTP laptop sources:

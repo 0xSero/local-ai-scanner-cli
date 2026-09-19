@@ -93,6 +93,11 @@ export const REGIONS: RegionSpec[] = [
   { code: "NO", name: "Norway", currency: "NOK", sources: ["apple-store", "lenovo"], partial: true }, // no apple-refurbished, no dell-store; no marketplace/retail
   { code: "PT", name: "Portugal", currency: "EUR", sources: ["apple-store", "lenovo"], partial: true }, // no apple-refurbished, no dell-store; no marketplace/retail
   { code: "NZ", name: "New Zealand", currency: "NZD", sources: ["apple-store", "apple-refurbished", "lenovo", "dell-store"], partial: true }, // no marketplace/retail
+  { code: "HK", name: "Hong Kong", currency: "HKD", sources: ["lenovo", "apple-store"], partial: true }, // no apple-refurbished, no dell-store, no marketplace
+  { code: "TH", name: "Thailand", currency: "THB", sources: ["lenovo", "apple-store"], partial: true }, // no apple-refurbished, no dell-store, no marketplace
+  { code: "PH", name: "Philippines", currency: "PHP", sources: ["lenovo", "apple-store"], partial: true }, // no apple-refurbished, no dell-store, no marketplace
+  { code: "MY", name: "Malaysia", currency: "MYR", sources: ["lenovo", "apple-store", "ebay"], partial: true }, // no apple-refurbished, no dell-store, no amazon
+  { code: "CL", name: "Chile", currency: "CLP", sources: ["lenovo", "apple-store"], partial: true }, // no apple-refurbished, no dell-store, no marketplace
 ];
 
 /** Look up a region spec by its country code. */

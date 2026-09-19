@@ -54,6 +54,11 @@ const COUNTRY_PREFIX: Record<string, string> = {
   PT: "/pt",
   IE: "/ie",
   NZ: "/nz",
+  HK: "/hk",
+  TH: "/th",
+  PH: "/ph",
+  MY: "/my",
+  CL: "/cl",
 };
 
 interface ChipPrice {

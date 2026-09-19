@@ -59,6 +59,7 @@ const DOMAINS: Record<string, string> = {
   IT: "ebay.it",
   NL: "ebay.nl",
   AU: "ebay.com.au",
+  MY: "ebay.com.my",
 };
 
 /** Map eBay condition strings to our Condition type. */
@@ -222,7 +223,7 @@ async function scanEbay(
 export const ebaySource: Source = {
   id: "ebay",
   name: "eBay",
-  regions: ["US", "DE", "GB", "PL", "AT", "BE", "CA", "CH", "ES", "FR", "IE", "IT", "NL", "AU"],
+  regions: ["US", "DE", "GB", "PL", "AT", "BE", "CA", "CH", "ES", "FR", "IE", "IT", "NL", "AU", "MY"],
   categories: ["gpu", "apple", "memory", "amd"],
   scan: (products, ctx) => scanEbay(products, ctx.regionCode),
 };
