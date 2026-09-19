@@ -207,6 +207,39 @@ const REGION_COOKIES: Record<string, string> = {
   PL: "session-id=260-1234567-1234567; session-id-time=1234567890l; i18n-prefs=PLN; lc-main=pl_PL",
 };
 
+/**
+ * Amazon rate-limits by client IP across its country domains rather than per
+ * domain: one probe of seven queries on amazon.com answered with the Akamai
+ * challenge page for all seven, its control included, so the limit is not per
+ * query and not per domain.
+ *
+ * The runner scans every region in parallel, so all eighteen Amazon regions hit
+ * Amazon at once and each one then answers 503. The scan was causing its own
+ * throttling: the error count grew with each region added — 2,912 at 28 regions,
+ * 3,356 at 28 with the new stores, 4,066 at 33 — and the products whose only
+ * consumer source is Amazon came back empty while the rest priced.
+ *
+ * So a few Amazon regions run at a time rather than all of them. The per-product
+ * delay below is not enough on its own, because eighteen regions each keeping to
+ * it still multiply to eighteen requests in flight.
+ */
+const MAX_CONCURRENT_REGIONS = 2;
+let regionsInFlight = 0;
+const regionQueue: (() => void)[] = [];
+
+async function withRegionSlot<T>(work: () => Promise<T>): Promise<T> {
+  if (regionsInFlight >= MAX_CONCURRENT_REGIONS) {
+    await new Promise<void>((resolve) => regionQueue.push(resolve));
+  }
+  regionsInFlight++;
+  try {
+    return await work();
+  } finally {
+    regionsInFlight--;
+    regionQueue.shift()?.();
+  }
+}
+
 async function scanAmazon(
   products: Product[],
   regionCode: string,
@@ -312,5 +345,5 @@ export const amazonSource: Source = {
   name: "Amazon",
   regions: ["US", "DE", "GB", "JP", "PL", "FR", "IT", "ES", "NL", "BE", "SE", "CA", "MX", "BR", "AU", "SG", "AE", "IN"],
   categories: ["gpu", "apple", "memory", "amd", "laptop"],
-  scan: (products, ctx) => scanAmazon(products, ctx.regionCode),
+  scan: (products, ctx) => withRegionSlot(() => scanAmazon(products, ctx.regionCode)),
 };
