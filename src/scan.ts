@@ -20,6 +20,10 @@ export interface ScanOptions {
   categories?: HardwareCategory[];
   /** Restrict to these region codes. Empty/undefined = all. */
   regions?: string[];
+  /** Restrict to these source ids. Empty/undefined = all. Lets a caller leave
+   * out a source that is throttling the client rather than have it spend the
+   * whole scan's time on retries that end in challenge pages. */
+  sources?: string[];
   /** Persist the snapshot to the cache directory. Defaults to `false` so
    * library callers get an in-memory result without side effects; the CLI
    * sets this to `true` to keep its cache-writing behavior. */
@@ -67,7 +71,9 @@ export async function runScan(options: ScanOptions = {}): Promise<PriceSnapshot>
   const regionJobs = regionCodes.map(async (code) => {
     const region = REGIONS.find((r) => r.code === code);
     if (!region) return;
-    const sources = sourcesForRegion(code).filter((s) => s.categories.some((c) => cats.includes(c)));
+    const sources = sourcesForRegion(code)
+      .filter((s) => s.categories.some((c) => cats.includes(c)))
+      .filter((s) => !options.sources?.length || options.sources.includes(s.id));
     if (sources.length === 0) return;
 
     const sourceJobs = sources.map(async (source) => {

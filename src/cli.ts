@@ -69,10 +69,12 @@ async function main() {
 async function cmdScan(args: Record<string, string | undefined>) {
   const categories = parseList(args.category, CATEGORIES);
   const regions = args.region ? args.region.split(",").map((s) => s.trim()) : undefined;
-  console.log(`⟳ Scanning ${categories.join(", ")} across ${regions?.join(", ") ?? "all regions"}…\n`);
+  const sources = args.source ? args.source.split(",").map((s) => s.trim()) : undefined;
+  console.log(`⟳ Scanning ${categories.join(", ")} across ${regions?.join(", ") ?? "all regions"}${sources ? ` from ${sources.join(", ")}` : ""}…\n`);
   const snapshot = await runScan({
     categories,
     regions,
+    sources,
     persist: true,
     onProgress: (e) => {
       if (e.phase === "start") {
@@ -183,6 +185,7 @@ function printHelp() {
 
 Commands:
   scan    [--category gpu,apple,amd,memory,laptop] [--region US,DE,GB,JP,PL]
+          [--source amazon,ebay,ceneo]  (omit a source that is throttling)
           Fetch current prices from all sources and cache a snapshot.
 
   prices  [--category <c>] [--region <r>] [--condition new|refurbished|used]
