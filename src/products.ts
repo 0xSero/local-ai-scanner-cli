@@ -1253,6 +1253,7 @@ export const PRODUCTS: AppleProduct[] = [
   // Legacy (refurb/Amazon only): M1/M2 Max, M1/M2 Ultra
   {
     id: "mac-studio-m4-max",
+    minPriceUsd: 1500,
     name: "Mac Studio M4 Max",
     category: "apple",
     manufacturer: "Apple",
@@ -1262,6 +1263,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "mac-studio-m3-ultra",
+    minPriceUsd: 1500,
     name: "Mac Studio M3 Ultra",
     category: "apple",
     manufacturer: "Apple",
@@ -1271,6 +1273,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "mac-studio-m1-max",
+    minPriceUsd: 1500,
     name: "Mac Studio M1 Max",
     category: "apple",
     manufacturer: "Apple",
@@ -1280,6 +1283,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "mac-studio-m2-max",
+    minPriceUsd: 1500,
     name: "Mac Studio M2 Max",
     category: "apple",
     manufacturer: "Apple",
@@ -1289,6 +1293,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "mac-studio-m1-ultra",
+    minPriceUsd: 1500,
     name: "Mac Studio M1 Ultra",
     category: "apple",
     manufacturer: "Apple",
@@ -1298,6 +1303,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "mac-studio-m2-ultra",
+    minPriceUsd: 1500,
     name: "Mac Studio M2 Ultra",
     category: "apple",
     manufacturer: "Apple",
@@ -1310,6 +1316,7 @@ export const PRODUCTS: AppleProduct[] = [
   // Current-gen (new store): M4, M4 Pro
   {
     id: "mac-mini-m4",
+    minPriceUsd: 450,
     name: "Mac mini M4",
     category: "apple",
     manufacturer: "Apple",
@@ -1319,6 +1326,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "mac-mini-m4-pro",
+    minPriceUsd: 450,
     name: "Mac mini M4 Pro",
     category: "apple",
     manufacturer: "Apple",
@@ -1328,6 +1336,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "mac-mini-m1",
+    minPriceUsd: 450,
     name: "Mac mini M1",
     category: "apple",
     manufacturer: "Apple",
@@ -1337,6 +1346,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "mac-mini-m2",
+    minPriceUsd: 450,
     name: "Mac mini M2",
     category: "apple",
     manufacturer: "Apple",
@@ -1346,6 +1356,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "mac-mini-m3",
+    minPriceUsd: 450,
     name: "Mac mini M3",
     category: "apple",
     manufacturer: "Apple",
@@ -1359,6 +1370,7 @@ export const PRODUCTS: AppleProduct[] = [
   // Legacy (refurb/Amazon only): M1/M2/M3 Max
   {
     id: "macbook-pro-m5",
+    minPriceUsd: 1200,
     name: "MacBook Pro M5",
     category: "apple",
     manufacturer: "Apple",
@@ -1368,6 +1380,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "macbook-pro-m5-pro",
+    minPriceUsd: 1200,
     name: "MacBook Pro M5 Pro",
     category: "apple",
     manufacturer: "Apple",
@@ -1377,6 +1390,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "macbook-pro-m5-max",
+    minPriceUsd: 1200,
     name: "MacBook Pro M5 Max",
     category: "apple",
     manufacturer: "Apple",
@@ -1386,6 +1400,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "macbook-pro-m4-pro",
+    minPriceUsd: 1200,
     name: "MacBook Pro M4 Pro",
     category: "apple",
     manufacturer: "Apple",
@@ -1395,6 +1410,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "macbook-pro-m4-max",
+    minPriceUsd: 1200,
     name: "MacBook Pro M4 Max",
     category: "apple",
     manufacturer: "Apple",
@@ -1404,6 +1420,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "macbook-pro-m3-max",
+    minPriceUsd: 1200,
     name: "MacBook Pro M3 Max",
     category: "apple",
     manufacturer: "Apple",
@@ -1413,6 +1430,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "macbook-pro-m2-max",
+    minPriceUsd: 1200,
     name: "MacBook Pro M2 Max",
     category: "apple",
     manufacturer: "Apple",
@@ -1422,6 +1440,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "macbook-pro-m1-max",
+    minPriceUsd: 1200,
     name: "MacBook Pro M1 Max",
     category: "apple",
     manufacturer: "Apple",
@@ -1431,6 +1450,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "macbook-pro-m1",
+    minPriceUsd: 1200,
     name: "MacBook Pro M1",
     category: "apple",
     manufacturer: "Apple",
@@ -1440,6 +1460,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "macbook-pro-m1-pro",
+    minPriceUsd: 1200,
     name: "MacBook Pro M1 Pro",
     category: "apple",
     manufacturer: "Apple",
@@ -1449,6 +1470,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "macbook-pro-m2",
+    minPriceUsd: 1200,
     name: "MacBook Pro M2",
     category: "apple",
     manufacturer: "Apple",
@@ -1458,6 +1480,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "macbook-pro-m2-pro",
+    minPriceUsd: 1200,
     name: "MacBook Pro M2 Pro",
     category: "apple",
     manufacturer: "Apple",
@@ -1467,6 +1490,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "macbook-pro-m3",
+    minPriceUsd: 1200,
     name: "MacBook Pro M3",
     category: "apple",
     manufacturer: "Apple",
@@ -1476,6 +1500,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "macbook-pro-m3-pro",
+    minPriceUsd: 1200,
     name: "MacBook Pro M3 Pro",
     category: "apple",
     manufacturer: "Apple",
