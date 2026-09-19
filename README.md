@@ -111,13 +111,13 @@ starts, then `✓` with a listing count or `✗` with an error count:
 
 ```
 ⟳ Scanning gpu across US…
-  → US/newegg (57 products)
-  → US/amazon (57 products)
-  → US/ebay (57 products)
-  → US/microcenter (57 products)
-  ✗ US/microcenter — 57 error(s)
-  ✗ US/ebay — 57 error(s)
-  ✗ US/newegg — 57 error(s)
+  → US/newegg (66 products)
+  → US/amazon (66 products)
+  → US/ebay (66 products)
+  → US/microcenter (66 products)
+  ✗ US/microcenter — 66 error(s)
+  ✗ US/ebay — 66 error(s)
+  ✗ US/newegg — 66 error(s)
   ✓ US/amazon — 29 listings
 ✓ 29 listings collected.
 ```
@@ -329,9 +329,9 @@ Verified unreachable over plain HTTP and therefore not added:
 
 ## Products tracked
 
-109 products across 5 categories:
+118 products across 5 categories:
 
-- **GPUs (57)**: RTX 5090–5060, Ti variants, RTX 4090–4060, RTX 3090–3060 Ti, RTX Pro 6000/5000/4500/4000 Blackwell, RTX 6000/4000/2000 Ada, RTX A6000, DGX Spark, H100, H200, A100, L40S, L4, T4, GB200, B300, Instinct MI325X/MI355X, Gaudi 3, Jetson AGX Thor, Jetson AGX Orin, Radeon RX 9070 XT/9070/9070 GRE/9060 XT/7900 XTX/7900 XT/7700 XT, Radeon AI PRO R9700, Intel Arc B580/B570/A770, Intel Arc Pro B60/B50
+- **GPUs (66)**: RTX 5090–5060, Ti variants, RTX 4090–4060, RTX 3090–3060 Ti, RTX Pro 6000/5000/4500/4000 Blackwell, RTX 6000/4000/2000 Ada, RTX 5000 Ada, RTX A6000/A5000/A4000, DGX Spark, H100, H200, A100, L40S, L40, L4, T4, Tesla V100, GB200, B300, Instinct MI325X/MI355X, Gaudi 3, Jetson AGX Thor, Jetson AGX Orin, Jetson Orin Nano, Radeon RX 9070 XT/9070/9070 GRE/9060 XT (16GB & 8GB)/7900 XTX/7900 XT/7700 XT, Radeon AI PRO R9700, Intel Arc B580/B570/A770/A750/A380, Intel Arc Pro B60/B50
 - **Apple Silicon (25)**: Mac Studio (M1/M2 Max & Ultra, M3 Ultra, M4 Max), Mac mini (M1–M4, M4 Pro), MacBook Pro (M1–M5, Pro & Max tiers)
 - **AMD (2)**: Framework Desktop (Ryzen AI Max 395+), Strix Halo Mini PC
 - **Memory (5)**: DDR5-5600 32/64GB, DDR4-3200 32GB, DDR4/DDR5 ECC 64GB RDIMM
@@ -342,7 +342,7 @@ Verified unreachable over plain HTTP and therefore not added:
 ```
 src/
   types.ts          # Domain types + Effect v4 Schema definitions
-  products.ts       # Product catalog (109 products, 5 categories)
+  products.ts       # Product catalog (118 products, 5 categories)
   regions.ts        # Region definitions (28 regions with source mapping)
   source.ts         # Source interface + registry
   scan.ts           # Scan orchestrator (runs sources, builds snapshot)
