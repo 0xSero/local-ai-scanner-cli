@@ -25,6 +25,7 @@ import type { Source, SourceResult } from "../source.js";
 import { fetchText, fetchError } from "../http.js";
 import { regionOf } from "../regions.js";
 import { queryFor } from "../products.js";
+import { titleMatches, isAccessoryListing, isSystemListing } from "./listing-match.js";
 
 const SEARCH_URL = "https://allegro.pl/listing/webapi";
 
@@ -49,21 +50,8 @@ function isCaptcha(html: string): boolean {
   return /captcha|weryfikuj|robot|challenge/i.test(html);
 }
 
-function titleMatches(title: string, query: string): boolean {
-  const norm = (s: string) =>
-    s.toLowerCase().replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ").trim();
-  const t = norm(title);
-  const words = norm(query).split(" ").filter((w) => w.length > 1);
-  return words.every((w) => t.includes(w));
-}
-
 /** Accessory keywords in English (most electronics listings use English model names). */
-const ACCESSORY_KEYWORDS = [
-  "cable", "adapter", "bracket", "riser", "extension", "connector",
-  "fan", "cooler", "thermal", "pad", "holder", "stand", "mount",
-  "screw", "washer", "cord", "wire", "power supply",
-  "water block", "waterblock", "backplate", "deshroud", "sticker",
-];
+;
 
 async function scanAllegro(
   products: Product[],
@@ -97,8 +85,7 @@ async function scanAllegro(
       const $el = $(el);
       const title = $el.find("h2").first().text().trim();
       if (!title || !titleMatches(title, query)) return;
-      const normTitle = title.toLowerCase();
-      if (ACCESSORY_KEYWORDS.some((kw) => normTitle.includes(kw))) return;
+      if (isAccessoryListing(title)) return;
       // Try multiple price selectors — Allegro's obfuscated classes change
       const priceText =
         $el.find("[data-role='regular-price']").first().text().trim() ||

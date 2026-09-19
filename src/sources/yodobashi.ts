@@ -20,6 +20,7 @@ import type { Source, SourceResult } from "../source.js";
 import { fetchText, fetchError } from "../http.js";
 import { regionOf } from "../regions.js";
 import { queryFor } from "../products.js";
+import { titleMatches, isAccessoryListing, isSystemListing } from "./listing-match.js";
 
 const SEARCH_URL = "https://www.yodobashi.com/";
 
@@ -42,20 +43,7 @@ function parseStock(text: string): { inStock: boolean | null; quantity: number |
   return { inStock: null, quantity: null };
 }
 
-function titleMatches(title: string, query: string): boolean {
-  const norm = (s: string) =>
-    s.toLowerCase().replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ").trim();
-  const t = norm(title);
-  const words = norm(query).split(" ").filter((w) => w.length > 1);
-  return words.every((w) => t.includes(w));
-}
-
-const ACCESSORY_KEYWORDS = [
-  "cable", "adapter", "bracket", "riser", "extension", "connector",
-  "fan", "cooler", "thermal", "pad", "holder", "stand", "mount",
-  "screw", "washer", "cord", "wire", "power supply", "water block",
-  "waterblock", "backplate", "deshroud", "sticker",
-];
+;
 
 async function scanYodobashi(
   products: Product[],
@@ -86,8 +74,7 @@ async function scanYodobashi(
       const title =
         $el.find(".pNameBlock, .searchResultName, .product-name, h3, h2").first().text().trim();
       if (!title || !titleMatches(title, query)) return;
-      const normTitle = title.toLowerCase();
-      if (ACCESSORY_KEYWORDS.some((kw) => normTitle.includes(kw))) return;
+      if (isAccessoryListing(title)) return;
       const priceText =
         $el.find(".pPriceBlock, .searchResultPrice, .price, [class*='price']").first().text().trim();
       const price = parsePrice(priceText);

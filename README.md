@@ -111,13 +111,13 @@ starts, then `✓` with a listing count or `✗` with an error count:
 
 ```
 ⟳ Scanning gpu across US…
-  → US/newegg (20 products)
-  → US/amazon (20 products)
-  → US/ebay (20 products)
-  → US/microcenter (20 products)
-  ✗ US/microcenter — 20 error(s)
-  ✗ US/ebay — 20 error(s)
-  ✗ US/newegg — 20 error(s)
+  → US/newegg (36 products)
+  → US/amazon (36 products)
+  → US/ebay (36 products)
+  → US/microcenter (36 products)
+  ✗ US/microcenter — 36 error(s)
+  ✗ US/ebay — 36 error(s)
+  ✗ US/newegg — 36 error(s)
   ✓ US/amazon — 29 listings
 ✓ 29 listings collected.
 ```
@@ -229,6 +229,13 @@ headless browser). Sources that block plain HTTP (eBay, Allegro, Micro Center,
 Newegg) are tracked and attempted every scan — failures are recorded in the
 snapshot's `errors` array.
 
+Every source shares one set of listing matchers (`sources/listing-match.ts`):
+a title must contain every word of the query, must not name an accessory (a
+query for "RTX 6000 Ada" returns its water block), must not name a complete
+machine for a component search, and must not name a higher variant of the product
+(a query for "RTX 3060" must not claim an "RTX 3060 Ti" listing, which is the
+same Amazon ASIN and costs more).
+
 | Source | Region | Categories | Method |
 | --- | --- | --- | --- |
 | **Newegg** | US | GPU, memory, AMD | Embedded `window.__initialState__` JSON |
@@ -320,26 +327,26 @@ Verified unreachable over plain HTTP and therefore not added:
 
 ## Products tracked
 
-56 products across 5 categories:
+82 products across 5 categories:
 
-- **GPUs (20)**: RTX 5090–5070, RTX 4090–4060, RTX 3090–3060, RTX Pro 6000 Blackwell, RTX A6000, DGX Spark
-- **Apple Silicon (16)**: Mac Studio (M1/M2 Max & Ultra, M3 Ultra, M4 Max), Mac mini M4/M4 Pro, MacBook Pro (M1–M5, Pro & Max tiers)
+- **GPUs (36)**: RTX 5090–5060, Ti variants, RTX 4090–4060, RTX 3090–3060 Ti, RTX Pro 6000/4500/4000 Blackwell, RTX 6000/4000/2000 Ada, RTX A6000, DGX Spark, Radeon RX 9070 XT/7900 XTX/7900 XT/7700 XT, Radeon AI PRO R9700, Intel Arc Pro B60
+- **Apple Silicon (25)**: Mac Studio (M1/M2 Max & Ultra, M3 Ultra, M4 Max), Mac mini (M1–M4, M4 Pro), MacBook Pro (M1–M5, Pro & Max tiers)
 - **AMD (2)**: Framework Desktop (Ryzen AI Max 395+), Strix Halo Mini PC
 - **Memory (5)**: DDR5-5600 32/64GB, DDR4-3200 32GB, DDR4/DDR5 ECC 64GB RDIMM
-- **Laptops (13)**: Dell XPS 16/14/13 + Dell 16 Premium, MacBook Pro 14/16 (M5) + Air 15 M5, Framework 13/16, ThinkPad X1 Carbon G12, ASUS Zenbook 14 OLED, HP OmniBook X Flip, Razer Blade 16
+- **Laptops (14)**: Dell XPS 16/14/13 + Dell 16 Premium, MacBook Pro 14/16 (M5) + Air 15 M5, Framework 13/16, ThinkPad X1 Carbon G12, ASUS Zenbook 14 OLED, HP OmniBook X Flip, Razer Blade 16 (RTX 5090/5080)
 
 ## Architecture
 
 ```
 src/
   types.ts          # Domain types + Effect v4 Schema definitions
-  products.ts       # Product catalog (43 products, 4 categories)
+  products.ts       # Product catalog (82 products, 5 categories)
   regions.ts        # Region definitions (28 regions with source mapping)
   source.ts         # Source interface + registry
   scan.ts           # Scan orchestrator (runs sources, builds snapshot)
   stats.ts          # Per-product aggregate stats (per-currency)
   cache.ts          # Snapshot read/write (Effect schema-validated)
-  http.ts           # HTTP fetch helper (desktop UA, retry)
+  http.ts           # HTTP fetch helper (desktop UA, retry, shared sleep)
   format.ts         # CLI table + currency formatting
   export-data.ts    # Export to data/ as CSV + JSON
   cli.ts            # CLI entry point (scan / prices / sources / export / history) — tsx shebang
@@ -351,6 +358,8 @@ src/
     crucial.ts      awd-it.ts         ceneo.ts
     dospara.ts      ebay.ts           allegro.ts
     microcenter.ts  yodobashi.ts      morele.ts
+    lenovo.ts       dell-store.ts
+    listing-match.ts  # Shared title / accessory / system matchers
     index.ts
 
 lib/

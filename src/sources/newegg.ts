@@ -15,6 +15,7 @@ import type { Source, SourceResult } from "../source.js";
 import { fetchText, fetchError } from "../http.js";
 import { regionOf } from "../regions.js";
 import { queryFor } from "../products.js";
+import { titleMatches, isAccessoryListing, isSystemListing } from "./listing-match.js";
 
 const SEARCH_URL = "https://www.newegg.com/p/pl?d=";
 
@@ -42,26 +43,13 @@ function parseInitialState(html: string): Record<string, unknown> | null {
 }
 
 /** Check if all significant words from the query appear in the product title. */
-function titleMatches(title: string, query: string): boolean {
-  const norm = (s: string) =>
-    s.toLowerCase().replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ").trim();
-  const t = norm(title);
-  const words = norm(query).split(" ").filter((w) => w.length > 1);
-  return words.every((w) => t.includes(w));
-}
-
 /**
  * Keywords that indicate a listing is a complete system (pre-built PC,
  * workstation, server) rather than a standalone component. Applied to GPU
  * searches where a $40K "RTX 5090" result is actually a gaming PC that
  * happens to contain the card.
  */
-const SYSTEM_KEYWORDS = [
-  "desktop", "laptop", "workstation", "server", "prebuilt", "pre-built",
-  "tower", "barebone", "gaming pc", "pc build", "gaming desktop",
-  "custom pc", "build pc", "pc bundle", "combo", "barebones",
-  "fully loaded", "system", "configured",
-];
+;
 
 /**
  * Per-product max price multiplier — a listing above `minPriceUsd * multiplier`
@@ -126,8 +114,7 @@ async function scanNewegg(
       const title = cell.Description?.Title ?? "";
       if (!titleMatches(title, query)) continue;
       // Exclude complete systems that contain the GPU but aren't standalone cards
-      const normTitle = title.toLowerCase();
-      if (product.category === "gpu" && SYSTEM_KEYWORDS.some((kw) => normTitle.includes(kw))) continue;
+      if (isSystemListing(title, product.category)) continue;
       if (cell.UnitCost < minPrice || cell.UnitCost > maxPrice) continue;
       listings.push({
         productId: product.id,

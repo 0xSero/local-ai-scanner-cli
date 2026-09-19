@@ -11,39 +11,17 @@
  * platform so the selectors are stable across Magento-based retailers.
  *
  * Search results include pre-built PCs and monitors that match GPU queries, so
- * we filter with SYSTEM_KEYWORDS and ACCESSORY_KEYWORDS like the Amazon source.
+ * we filter with the shared accessory and system matchers.
  */
 import * as cheerio from "cheerio";
 import type { PriceListing, Product, SourceError } from "../types.js";
 import type { Source, SourceResult } from "../source.js";
-import { fetchText, fetchError } from "../http.js";
+import { fetchText, fetchError, sleep } from "../http.js";
 import { regionOf } from "../regions.js";
 import { queryFor } from "../products.js";
+import { titleMatches, isAccessoryListing, isSystemListing } from "./listing-match.js";
 
 const SEARCH_URL = "https://www.awd-it.co.uk/catalogsearch/result/?q=";
-
-/** Accessory keywords — listings that match the query but aren't the product. */
-const ACCESSORY_KEYWORDS = [
-  "cable", "adapter", "bracket", "riser", "extension", "connector",
-  "fan", "cooler", "thermal", "pad", "holder", "stand", "mount",
-  "screw", "washer", "cord", "wire", "case fan", "power supply",
-  "bracket kit", "support", "anti-sag", "water block", "waterblock",
-  "backplate", "deshroud", "replacement", "repair", "decals", "sticker",
-  "keycap", "mousepad", "poster", "shirt", "mug", "monitor", "case",
-  "mid tower", "atx case",
-];
-
-/**
- * Keywords that indicate a listing is a complete system (pre-built PC,
- * workstation, gaming PC) rather than a standalone component. AWD-IT sells
- * many pre-built systems that contain the GPU in their name.
- */
-const SYSTEM_KEYWORDS = [
-  "desktop", "workstation", "server", "prebuilt", "pre-built", "prebuilt gaming pc",
-  "tower", "barebone", "gaming pc", "pc build", "system",
-  "configured", "bundle", "ryzen", "intel core", "ddr5 ram",
-  "ssd", "windows 11", "windows 11 prebuilt",
-];
 
 /**
  * Minimum price per category (GBP). Filters accessories and low-end parts
@@ -70,14 +48,6 @@ function parsePrice(text: string): number | null {
   const cleaned = text.replace(/[^\d.]/g, "").trim();
   if (!cleaned) return null;
   return parseFloat(cleaned);
-}
-
-function titleMatches(title: string, query: string): boolean {
-  const norm = (s: string) =>
-    s.toLowerCase().replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ").trim();
-  const t = norm(title);
-  const words = norm(query).split(" ").filter((w) => w.length > 1);
-  return words.every((w) => t.includes(w));
 }
 
 /**
@@ -129,11 +99,10 @@ async function scanAwdIt(
       const $el = $(el);
       const title = $el.find(".product-item-link").text().trim();
       if (!titleMatches(title, query)) return;
-      // Filter out accessories
-      const normTitle = title.toLowerCase();
-      if (ACCESSORY_KEYWORDS.some((kw) => normTitle.includes(kw))) return;
-      // Filter out complete systems for GPU searches
-      if (product.category === "gpu" && SYSTEM_KEYWORDS.some((kw) => normTitle.includes(kw))) return;
+      // A card's name appears in the title of its water block and its cable
+      if (isAccessoryListing(title)) return;
+      // AWD-IT lists pre-built systems that contain the card
+      if (isSystemListing(title, product.category)) return;
       // Price: first [data-price-amount] is the incl-tax shelf price
       const priceText = $el.find("[data-price-amount]").first().attr("data-price-amount") ?? "";
       const price = parseFloat(priceText);
@@ -158,7 +127,7 @@ async function scanAwdIt(
       });
       matched++;
     });
-    await new Promise((r) => setTimeout(r, 600));
+    await sleep(600);
   }
 
   return { listings, errors };

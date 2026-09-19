@@ -32,6 +32,7 @@ import type { Source, SourceResult } from "../source.js";
 import { fetchText, fetchError } from "../http.js";
 import { regionOf } from "../regions.js";
 import { queryFor } from "../products.js";
+import { titleMatches, isAccessoryListing, isSystemListing } from "./listing-match.js";
 
 const DOMAINS: Record<string, string> = {
   US: "ebay.com",
@@ -85,23 +86,8 @@ function isCaptcha(html: string): boolean {
   return /captcha|verify it's you|robot check/i.test(html);
 }
 
-function titleMatches(title: string, query: string): boolean {
-  const norm = (s: string) =>
-    s.toLowerCase().replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ").trim();
-  const t = norm(title);
-  const words = norm(query).split(" ").filter((w) => w.length > 1);
-  return words.every((w) => t.includes(w));
-}
-
 /** Accessory keywords — listings that match the search terms but aren't the product. */
-const ACCESSORY_KEYWORDS = [
-  "cable", "adapter", "bracket", "riser", "extension", "connector",
-  "fan", "cooler", "thermal", "pad", "holder", "stand", "mount",
-  "screw", "washer", "cord", "wire", "case fan", "power supply",
-  "bracket kit", "support", "anti-sag", "water block", "waterblock",
-  "backplate", "deshroud", "replacement", "repair", "sticker",
-  "keycap", "mousepad", "poster", "shirt", "mug", "dock", "hub",
-];
+;
 
 /**
  * Extract listings from eBay search HTML, handling both card variants.
@@ -135,8 +121,7 @@ function extractListings(
     // eBay inserts a "Shop on eBay" placeholder as the first card
     if (!title || title.toLowerCase().includes("shop on ebay")) continue;
     if (!titleMatches(title, query)) return out.length > 0 ? out : out;
-    const normTitle = title.toLowerCase();
-    if (ACCESSORY_KEYWORDS.some((kw) => normTitle.includes(kw))) continue;
+    if (isAccessoryListing(title)) continue;
 
     // Price: try all known price span selectors
     const priceText =

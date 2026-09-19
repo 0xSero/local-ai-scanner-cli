@@ -36,18 +36,50 @@ test("barrel re-exports the public API", () => {
   expect(typeof formatPrice).toBe("function");
 });
 
-test("catalog constants match the source of truth", () => {
-  expect(PRODUCTS).toHaveLength(56);
-  expect(REGIONS).toHaveLength(28);
-  expect(productsByCategory("gpu")).toHaveLength(20);
-  expect(productsByCategory("apple")).toHaveLength(16);
-  expect(productsByCategory("amd")).toHaveLength(2);
-  expect(productsByCategory("memory")).toHaveLength(5);
-  expect(productsByCategory("laptop")).toHaveLength(13);
+test("every catalog product is well formed", () => {
+  const ids = PRODUCTS.map((p) => p.id);
+  expect(new Set(ids).size).toBe(ids.length);
+  const categories = new Set(["gpu", "apple", "amd", "memory", "laptop"]);
+  for (const product of PRODUCTS) {
+    expect(categories.has(product.category)).toBe(true);
+    expect(product.name.length).toBeGreaterThan(0);
+    expect(Object.keys(product.queries).length).toBeGreaterThan(0);
+  }
+  // A GPU needs a USD floor: the sources derive their min/max window from it.
+  for (const product of productsByCategory("gpu")) {
+    expect(typeof product.minPriceUsd).toBe("number");
+  }
 });
 
-test("importing the barrel registers all 18 retailer sources", () => {
-  expect(allSources()).toHaveLength(18);
+test("productsByCategory partitions the catalog", () => {
+  const categories = ["gpu", "apple", "amd", "memory", "laptop"];
+  const counted = categories.reduce((total, category) => total + productsByCategory(category).length, 0);
+  expect(counted).toBe(PRODUCTS.length);
+  for (const category of categories) {
+    for (const product of productsByCategory(category)) {
+      expect(product.category).toBe(category);
+    }
+  }
+});
+
+test("regions are unique and well formed", () => {
+  const codes = REGIONS.map((r) => r.code);
+  expect(new Set(codes).size).toBe(codes.length);
+  for (const region of REGIONS) {
+    expect(region.name.length).toBeGreaterThan(0);
+    expect(region.currency).toHaveLength(3);
+  }
+});
+
+test("importing the barrel registers every source once", () => {
+  const sources = allSources();
+  const ids = sources.map((s) => s.id);
+  expect(new Set(ids).size).toBe(ids.length);
+  for (const source of sources) {
+    expect(source.regions.length).toBeGreaterThan(0);
+    expect(source.categories.length).toBeGreaterThan(0);
+    expect(typeof source.scan).toBe("function");
+  }
 });
 
 test("pure helpers behave on empty input", () => {

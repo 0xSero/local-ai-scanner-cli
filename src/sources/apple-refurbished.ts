@@ -138,16 +138,18 @@ async function scanAppleRefurb(regionCode: string): Promise<SourceResult> {
     const currency = offer.priceCurrency || region.currency;
 
     // Match against our catalog: check product type + chip family.
-    // For base chips (no suffix), require an exact "M{n} " boundary so
-    // "m5" doesn't match "m5 max" or "m5 pro". For suffixed chips like
-    // "m5 max", a plain includes() is fine since the suffix disambiguates.
+    // For base chips (no suffix), the chip must not be followed by a chip
+    // suffix: "m5" must not match "m5 max" or "m5 pro", and a word
+    // boundary alone does not separate them because the space after "m5" is
+    // itself a boundary. For suffixed chips like "m5 max", a plain
+    // includes() is fine since the suffix disambiguates.
     for (const product of appleProds) {
       const pageTerm = pageSearchTerm(product.applePage!);
       const chipTerm = chipSearchTerm(product.appleChip!);
       if (!name.includes(pageTerm)) continue;
       const isBaseChip = !/pro|max|ultra/.test(product.appleChip!);
       const chipMatches = isBaseChip
-        ? new RegExp(`\\b${chipTerm.replace(/\s+/g, "\\s+")}\\b`, "i").test(name)
+        ? new RegExp(`\\b${chipTerm.replace(/\s+/g, "\\s+")}\\b(?!\\s*(?:pro|max|ultra))`, "i").test(name)
         : name.includes(chipTerm);
       if (!chipMatches) continue;
       listings.push({

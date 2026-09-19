@@ -22,6 +22,7 @@ import type { Source, SourceResult } from "../source.js";
 import { fetchText, fetchError } from "../http.js";
 import { regionOf } from "../regions.js";
 import { queryFor } from "../products.js";
+import { titleMatches, isAccessoryListing, isSystemListing } from "./listing-match.js";
 
 const DOMAINS: Record<string, string> = {
   US: "amazon.com",
@@ -60,14 +61,7 @@ const USD_TO: Record<string, number> = {
 };
 
 /** Accessory keywords that indicate a listing is NOT the actual product. */
-const ACCESSORY_KEYWORDS = [
-  "cable", "adapter", "bracket", "riser", "extension", "connector",
-  "fan", "cooler", "thermal", "pad", "holder", "stand", "mount",
-  "screw", "washer", "cord", "wire", "case fan", "power supply",
-  "bracket kit", "support", "anti-sag", "water block", "waterblock",
-  "backplate", "deshroud", "replacement", "repair", "decals", "sticker",
-  "keycap", "mousepad", "poster", "shirt", "mug",
-];
+;
 
 /**
  * Keywords that indicate a listing is a complete system (pre-built PC,
@@ -75,11 +69,7 @@ const ACCESSORY_KEYWORDS = [
  * searches where a $60K "RTX Pro 6000" result is actually a workstation that
  * contains the card.
  */
-const SYSTEM_KEYWORDS = [
-  "desktop", "workstation", "server", "prebuilt", "pre-built",
-  "tower", "barebone", "gaming pc", "pc build", "system",
-  "configured", "bundle",
-];
+;
 
 /**
  * Maximum price multiplier — a listing above `minPriceUsd * multiplier` is
@@ -116,14 +106,6 @@ function parsePrice(text: string): number | null {
 
 function isCaptcha(html: string): boolean {
   return /api-services-support@amazon|Type the characters|captcha/i.test(html);
-}
-
-function titleMatches(title: string, query: string): boolean {
-  const norm = (s: string) =>
-    s.toLowerCase().replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ").trim();
-  const t = norm(title);
-  const words = norm(query).split(" ").filter((w) => w.length > 1);
-  return words.every((w) => t.includes(w));
 }
 
 /**
@@ -259,11 +241,10 @@ async function scanAmazon(
       if (!titleMatches(title, query)) return;
       // Filter out accessories (cables, brackets, etc.) that contain the
       // search terms but aren't the actual product
-      const normTitle = title.toLowerCase();
-      if (ACCESSORY_KEYWORDS.some((kw) => normTitle.includes(kw))) return;
+      if (isAccessoryListing(title)) return;
       // Filter out complete systems (workstations, pre-builts) that contain
       // the GPU but aren't standalone cards
-      if (product.category === "gpu" && SYSTEM_KEYWORDS.some((kw) => normTitle.includes(kw))) return;
+      if (isSystemListing(title, product.category)) return;
       const priceText = $el.find(".a-offscreen").first().text().trim();
       const price = parsePrice(priceText);
       if (price === null || price < minPrice || price > maxPrice) return;

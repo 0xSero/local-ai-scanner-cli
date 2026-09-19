@@ -18,29 +18,12 @@
 import * as cheerio from "cheerio";
 import type { PriceListing, Product, SourceError } from "../types.js";
 import type { Source, SourceResult } from "../source.js";
-import { fetchText, fetchError } from "../http.js";
+import { fetchText, fetchError, sleep } from "../http.js";
 import { regionOf } from "../regions.js";
 import { queryFor } from "../products.js";
+import { titleMatches, isAccessoryListing, isSystemListing } from "./listing-match.js";
 
 const SEARCH_URL = "https://www.ceneo.pl/Komputery;szukaj-";
-
-/** Accessory keywords — listings that match the query but aren't the product. */
-const ACCESSORY_KEYWORDS = [
-  "cable", "adapter", "bracket", "riser", "extension", "connector",
-  "fan", "cooler", "thermal", "pad", "holder", "stand", "mount",
-  "screw", "washer", "cord", "wire", "case fan", "power supply",
-  "water block", "waterblock", "backplate", "deshroud", "replacement",
-  "repair", "sticker", "alphacool", "phanteks", "barrow", "bykski",
-];
-
-/**
- * Keywords that indicate a listing is a complete system (laptop, pre-built PC)
- * rather than a standalone component. Ceneo indexes laptops that contain the GPU.
- */
-const SYSTEM_KEYWORDS = [
-  "laptop", "desktop", "workstation", "server", "prebuilt", "pre-built",
-  "tower", "gaming pc", "pc build", "system", "notebook",
-];
 
 /**
  * Minimum price per category (PLN). Filters accessories and low-end parts.
@@ -63,14 +46,6 @@ function parsePolishPrice(text: string): number | null {
   const cleaned = text.replace(/[^\d.,]/g, "").trim();
   if (!cleaned) return null;
   return parseFloat(cleaned.replace(/\./g, "").replace(",", "."));
-}
-
-function titleMatches(title: string, query: string): boolean {
-  const norm = (s: string) =>
-    s.toLowerCase().replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ").trim();
-  const t = norm(title);
-  const words = norm(query).split(" ").filter((w) => w.length > 1);
-  return words.every((w) => t.includes(w));
 }
 
 interface CeneoProduct {
@@ -150,11 +125,10 @@ async function scanCeneo(
     for (const cp of ceneoProducts) {
       if (matched >= 8) break;
       if (!titleMatches(cp.name, query)) continue;
-      // Filter out accessories
-      const normName = cp.name.toLowerCase();
-      if (ACCESSORY_KEYWORDS.some((kw) => normName.includes(kw))) continue;
-      // Filter out complete systems for GPU searches
-      if (product.category === "gpu" && SYSTEM_KEYWORDS.some((kw) => normName.includes(kw))) continue;
+      // A card's name appears in the title of its water block and its cable
+      if (isAccessoryListing(cp.name)) continue;
+      // Ceneo indexes laptops that contain the card
+      if (isSystemListing(cp.name, product.category)) continue;
       if (cp.lowPrice < minPrice || cp.lowPrice > maxPrice) continue;
 
       listings.push({
@@ -175,7 +149,7 @@ async function scanCeneo(
       });
       matched++;
     }
-    await new Promise((r) => setTimeout(r, 600));
+    await sleep(600);
   }
 
   return { listings, errors };

@@ -18,6 +18,7 @@ import type { Source, SourceResult } from "../source.js";
 import { fetchText, fetchError } from "../http.js";
 import { regionOf } from "../regions.js";
 import { queryFor } from "../products.js";
+import { titleMatches, isAccessoryListing, isSystemListing } from "./listing-match.js";
 
 const SEARCH_URL = "https://www.microcenter.com/search/search_results.aspx?Ntt=";
 
@@ -43,25 +44,9 @@ function isCaptcha(html: string): boolean {
   return /captcha|access denied|blocked|robot/i.test(html);
 }
 
-function titleMatches(title: string, query: string): boolean {
-  const norm = (s: string) =>
-    s.toLowerCase().replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ").trim();
-  const t = norm(title);
-  const words = norm(query).split(" ").filter((w) => w.length > 1);
-  return words.every((w) => t.includes(w));
-}
+;
 
-const SYSTEM_KEYWORDS = [
-  "desktop", "laptop", "workstation", "server", "prebuilt", "pre-built",
-  "tower", "barebone", "gaming pc", "pc build", "system",
-];
-
-const ACCESSORY_KEYWORDS = [
-  "cable", "adapter", "bracket", "riser", "extension", "connector",
-  "fan", "cooler", "thermal", "pad", "holder", "stand", "mount",
-  "screw", "washer", "cord", "wire", "power supply", "water block",
-  "waterblock", "backplate", "deshroud", "sticker",
-];
+;
 
 async function scanMicrocenter(
   products: Product[],
@@ -93,9 +78,8 @@ async function scanMicrocenter(
       const $el = $(el);
       const title = $el.find(".pName, h2, h3").first().text().trim();
       if (!title || !titleMatches(title, query)) return;
-      const normTitle = title.toLowerCase();
-      if (ACCESSORY_KEYWORDS.some((kw) => normTitle.includes(kw))) return;
-      if (product.category === "gpu" && SYSTEM_KEYWORDS.some((kw) => normTitle.includes(kw))) return;
+      if (isAccessoryListing(title)) return;
+      if (isSystemListing(title, product.category)) return;
       const priceText = $el.find(".pPrice, .price").first().text().trim();
       const price = parsePrice(priceText);
       if (price === null || price <= 0) return;

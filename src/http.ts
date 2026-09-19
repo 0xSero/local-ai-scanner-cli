@@ -75,8 +75,11 @@ export async function fetchText(
   return { ok: false, status: 0, body: "unreachable", finalUrl: url };
 }
 
-function sleep(ms: number): Promise<void> {
-  return new Promise((r) => setTimeout(r, ms));
+/** Pause between requests so a source stays polite to its retailer. */
+export function sleep(ms: number): Promise<void> {
+  const { promise, resolve } = Promise.withResolvers<void>();
+  setTimeout(resolve, ms);
+  return promise;
 }
 
 /** Build a {@link SourceError} from a failed fetch. */
