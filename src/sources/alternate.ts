@@ -29,6 +29,16 @@ function parseGermanPrice(text: string): number | null {
 }
 
 /**
+ * Parse stock from the card's availability line. Alternate labels an available
+ * product "Sofort verfügbar" ("available immediately"), not "Auf Lager", so
+ * testing only for the latter marked every listing out of stock.
+ */
+function parseStock(text: string): boolean {
+  if (/nicht\s+verfügbar|ausverkauft|nicht\s+auf\s*lager/i.test(text)) return false;
+  return /sofort\s+verfügbar|verfügbar|auf\s*lager|lieferbar/i.test(text);
+}
+
+/**
  * Parse the product cards on a listing page into listings for one product.
  *
  * The card's `.product-name` span holds the listing title, which is what the
@@ -61,7 +71,7 @@ function parseCards(
     if (isAccessoryListing(title)) return;
     // Alternate also lists whole machines that contain the card
     if (isSystemListing(title, product.category)) return;
-    // Parse stock: "Auf Lager" = in stock, other availability text = not
+    // Parse stock: "Sofort verfügbar" = in stock, other availability text = not
     const stockText = $el.find("[style*='availability']").first().text().trim();
     listings.push({
       productId: product.id,
@@ -73,7 +83,7 @@ function parseCards(
       price,
       currency: region.currency,
       url: href.startsWith("http") ? href : `https://www.alternate.de${href}`,
-      inStock: /auf\s*lager/i.test(stockText),
+      inStock: parseStock(stockText),
       quantity: null,
       fetchedAt: now,
     });
