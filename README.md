@@ -111,13 +111,13 @@ starts, then `✓` with a listing count or `✗` with an error count:
 
 ```
 ⟳ Scanning gpu across US…
-  → US/newegg (51 products)
-  → US/amazon (51 products)
-  → US/ebay (51 products)
-  → US/microcenter (51 products)
-  ✗ US/microcenter — 51 error(s)
-  ✗ US/ebay — 51 error(s)
-  ✗ US/newegg — 51 error(s)
+  → US/newegg (57 products)
+  → US/amazon (57 products)
+  → US/ebay (57 products)
+  → US/microcenter (57 products)
+  ✗ US/microcenter — 57 error(s)
+  ✗ US/ebay — 57 error(s)
+  ✗ US/newegg — 57 error(s)
   ✓ US/amazon — 29 listings
 ✓ 29 listings collected.
 ```
@@ -329,20 +329,20 @@ Verified unreachable over plain HTTP and therefore not added:
 
 ## Products tracked
 
-102 products across 5 categories:
+109 products across 5 categories:
 
-- **GPUs (51)**: RTX 5090–5060, Ti variants, RTX 4090–4060, RTX 3090–3060 Ti, RTX Pro 6000/5000/4500/4000 Blackwell, RTX 6000/4000/2000 Ada, RTX A6000, DGX Spark, H100, H200, A100, L40S, GB200, Instinct MI325X, Gaudi 3, Jetson AGX Thor, Jetson AGX Orin, Radeon RX 9070 XT/9070/9060 XT/7900 XTX/7900 XT/7700 XT, Radeon AI PRO R9700, Intel Arc B580/B570/A770, Intel Arc Pro B60
+- **GPUs (57)**: RTX 5090–5060, Ti variants, RTX 4090–4060, RTX 3090–3060 Ti, RTX Pro 6000/5000/4500/4000 Blackwell, RTX 6000/4000/2000 Ada, RTX A6000, DGX Spark, H100, H200, A100, L40S, L4, T4, GB200, B300, Instinct MI325X/MI355X, Gaudi 3, Jetson AGX Thor, Jetson AGX Orin, Radeon RX 9070 XT/9070/9070 GRE/9060 XT/7900 XTX/7900 XT/7700 XT, Radeon AI PRO R9700, Intel Arc B580/B570/A770, Intel Arc Pro B60/B50
 - **Apple Silicon (25)**: Mac Studio (M1/M2 Max & Ultra, M3 Ultra, M4 Max), Mac mini (M1–M4, M4 Pro), MacBook Pro (M1–M5, Pro & Max tiers)
 - **AMD (2)**: Framework Desktop (Ryzen AI Max 395+), Strix Halo Mini PC
 - **Memory (5)**: DDR5-5600 32/64GB, DDR4-3200 32GB, DDR4/DDR5 ECC 64GB RDIMM
-- **Laptops (19)**: Dell XPS 16/14/13 + Dell 16 Premium, MacBook Pro 14/16 (M5) + Air 15 M5, Framework 13/16, ThinkPad X1 Carbon G12, ASUS Zenbook 14 OLED, HP OmniBook X Flip, Razer Blade 16 (RTX 5090/5080), RTX 5090/5080/4090/5070 Ti/4060 laptop GPUs
+- **Laptops (20)**: Dell XPS 16/14/13 + Dell 16 Premium, MacBook Pro 14/16 (M5) + Air 13/15 M5, Framework 13/16, ThinkPad X1 Carbon G12, ASUS Zenbook 14 OLED, HP OmniBook X Flip, Razer Blade 16 (RTX 5090/5080), RTX 5090/5080/4090/5070 Ti/4060 laptop GPUs
 
 ## Architecture
 
 ```
 src/
   types.ts          # Domain types + Effect v4 Schema definitions
-  products.ts       # Product catalog (102 products, 5 categories)
+  products.ts       # Product catalog (109 products, 5 categories)
   regions.ts        # Region definitions (28 regions with source mapping)
   source.ts         # Source interface + registry
   scan.ts           # Scan orchestrator (runs sources, builds snapshot)

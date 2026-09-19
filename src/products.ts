@@ -414,6 +414,84 @@ export const PRODUCTS: AppleProduct[] = [
     minPriceUsd: 16000,
   },
 
+  {
+    id: "b300",
+    name: "B300",
+    category: "gpu",
+    manufacturer: "NVIDIA",
+    queries: {
+      amazon: "NVIDIA B300",
+      ebay: "NVIDIA B300 Blackwell Ultra",
+      ceneo: "NVIDIA B300",
+    },
+    minPriceUsd: 40000,
+  },
+  {
+    id: "mi355x",
+    name: "Instinct MI355X",
+    category: "gpu",
+    manufacturer: "AMD",
+    queries: {
+      amazon: "AMD Instinct MI355X",
+      ebay: "AMD Instinct MI355X 288GB",
+    },
+    minPriceUsd: 25000,
+  },
+  {
+    id: "l4",
+    name: "L4",
+    category: "gpu",
+    manufacturer: "NVIDIA",
+    queries: {
+      newegg: "NVIDIA L4 24GB",
+      amazon: "NVIDIA L4 24GB",
+      ebay: "NVIDIA L4 24GB",
+      ceneo: "NVIDIA L4",
+    },
+    minPriceUsd: 2000,
+  },
+  {
+    id: "t4",
+    name: "T4",
+    category: "gpu",
+    manufacturer: "NVIDIA",
+    queries: {
+      newegg: "NVIDIA T4 16GB",
+      amazon: "NVIDIA T4 16GB",
+      ebay: "NVIDIA T4 16GB",
+      ceneo: "NVIDIA T4",
+    },
+    minPriceUsd: 500,
+  },
+  {
+    id: "arc-pro-b50",
+    name: "Intel Arc Pro B50",
+    category: "gpu",
+    manufacturer: "Intel",
+    queries: {
+      newegg: "Arc Pro B50",
+      amazon: "Intel Arc Pro B50",
+      alternate: "Arc Pro B50",
+      ceneo: "Arc Pro B50",
+      "awd-it": "Arc Pro B50",
+    },
+    minPriceUsd: 349,
+  },
+  {
+    id: "rx-9070-gre",
+    name: "Radeon RX 9070 GRE",
+    category: "gpu",
+    manufacturer: "AMD",
+    queries: {
+      newegg: "RX 9070 GRE",
+      amazon: "RX 9070 GRE",
+      alternate: "RX 9070 GRE",
+      ceneo: "RX 9070 GRE",
+      "awd-it": "RX 9070 GRE",
+    },
+    minPriceUsd: 549,
+  },
+
   // ── NVIDIA — Jetson embedded ────────────────────────────────────────────
   {
     id: "jetson-agx-thor",
@@ -971,6 +1049,19 @@ export const PRODUCTS: AppleProduct[] = [
       dospara: "MacBook Pro 16 M5",
     },
     minPriceUsd: 3499,
+  },
+  {
+    id: "macbook-air-13-m5",
+    name: "MacBook Air 13 (M5)",
+    category: "laptop",
+    manufacturer: "Apple",
+    queries: {
+      amazon: "MacBook Air 13 M5",
+      morele: "laptop Apple MacBook Air 13 M5",
+      alternate: "Apple MacBook Air 13 M5",
+      dospara: "MacBook Air 13 M5",
+    },
+    minPriceUsd: 1099,
   },
   {
     id: "macbook-air-15-m5",
