@@ -21,6 +21,16 @@
  *   DE → ebay.de      (EUR)
  *   GB → ebay.co.uk   (GBP)
  *   PL → ebay.pl      (PLN)
+ *   AT → ebay.at      (EUR)
+ *   BE → ebay.be      (EUR)
+ *   CA → ebay.ca      (CAD)
+ *   CH → ebay.ch      (CHF)
+ *   ES → ebay.es      (EUR)
+ *   FR → ebay.fr      (EUR)
+ *   IE → ebay.ie      (EUR)
+ *   IT → ebay.it      (EUR)
+ *   NL → ebay.nl      (EUR)
+ *   AU → ebay.com.au  (AUD)
  *
  * eBay Japan redirects to a 404 portal (no /sch/ search), so JP is not covered.
  * Quantity/inventory is not exposed in search results — only on item pages.
@@ -39,6 +49,16 @@ const DOMAINS: Record<string, string> = {
   DE: "ebay.de",
   GB: "ebay.co.uk",
   PL: "ebay.pl",
+  AT: "ebay.at",
+  BE: "ebay.be",
+  CA: "ebay.ca",
+  CH: "ebay.ch",
+  ES: "ebay.es",
+  FR: "ebay.fr",
+  IE: "ebay.ie",
+  IT: "ebay.it",
+  NL: "ebay.nl",
+  AU: "ebay.com.au",
 };
 
 /** Map eBay condition strings to our Condition type. */
@@ -202,7 +222,7 @@ async function scanEbay(
 export const ebaySource: Source = {
   id: "ebay",
   name: "eBay",
-  regions: ["US", "DE", "GB", "PL"],
+  regions: ["US", "DE", "GB", "PL", "AT", "BE", "CA", "CH", "ES", "FR", "IE", "IT", "NL", "AU"],
   categories: ["gpu", "apple", "memory", "amd"],
   scan: (products, ctx) => scanEbay(products, ctx.regionCode),
 };

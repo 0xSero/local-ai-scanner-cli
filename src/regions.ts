@@ -63,33 +63,35 @@ export const REGIONS: RegionSpec[] = [
     sources: ["allegro", "amazon", "ebay", "apple-store", "apple-refurbished", "crucial", "ceneo", "morele"],
   },
 
-  // ── Vendor-store-only markets (added 2026-09; each < 5 suppliers) ─────────
-  // Covered solely by Apple/Lenovo/Dell official stores verified over plain
-  // HTTP. No local marketplace or multi-retailer coverage exists yet, so every
-  // region below is `partial`. The comment on each names the vendor families
-  // that do NOT serve it (on top of the absent marketplace/retail coverage).
-  { code: "FR", name: "France", currency: "EUR", sources: ["apple-store", "apple-refurbished", "lenovo"], partial: true }, // no dell-store; no marketplace/retail
-  { code: "ES", name: "Spain", currency: "EUR", sources: ["apple-store", "apple-refurbished", "lenovo"], partial: true }, // no dell-store; no marketplace/retail
-  { code: "IT", name: "Italy", currency: "EUR", sources: ["apple-store", "apple-refurbished", "lenovo"], partial: true }, // no dell-store; no marketplace/retail
-  { code: "NL", name: "Netherlands", currency: "EUR", sources: ["apple-store", "apple-refurbished", "lenovo"], partial: true }, // no dell-store; no marketplace/retail
-  { code: "SE", name: "Sweden", currency: "SEK", sources: ["apple-store", "lenovo", "dell-store"], partial: true }, // no apple-refurbished; no marketplace/retail
-  { code: "AU", name: "Australia", currency: "AUD", sources: ["apple-store", "apple-refurbished", "lenovo", "dell-store"], partial: true }, // no marketplace/retail
-  { code: "CA", name: "Canada", currency: "CAD", sources: ["apple-store", "apple-refurbished", "lenovo", "dell-store"], partial: true }, // no marketplace/retail
-  { code: "IN", name: "India", currency: "INR", sources: ["apple-store", "lenovo"], partial: true }, // no apple-refurbished, no dell-store; no marketplace/retail
-  { code: "BR", name: "Brazil", currency: "BRL", sources: ["apple-store", "lenovo", "dell-store"], partial: true }, // no apple-refurbished; no marketplace/retail
-  { code: "MX", name: "Mexico", currency: "MXN", sources: ["apple-store", "lenovo"], partial: true }, // no apple-refurbished, no dell-store; no marketplace/retail
-  { code: "AE", name: "United Arab Emirates", currency: "AED", sources: ["apple-store"], partial: true }, // no apple-refurbished, no lenovo, no dell-store; no marketplace/retail
-  { code: "SG", name: "Singapore", currency: "SGD", sources: ["apple-store", "apple-refurbished", "lenovo", "dell-store"], partial: true }, // no marketplace/retail
+  // ── Markets added 2026-09 (fewer than five suppliers each) ──────────────
+  // Each was originally covered only by Apple/Lenovo/Dell official stores. The
+  // Amazon and eBay country sites (see those sources) now cover the markets that
+  // have a dedicated marketplace of their own, which brings France, Spain, Italy,
+  // the Netherlands, Australia, Canada and Singapore to five suppliers. The rest
+  // stay `partial`, and each comment names the supplier families that do NOT
+  // serve it.
+  { code: "FR", name: "France", currency: "EUR", sources: ["apple-store", "apple-refurbished", "lenovo", "amazon", "ebay"] },
+  { code: "ES", name: "Spain", currency: "EUR", sources: ["apple-store", "apple-refurbished", "lenovo", "amazon", "ebay"] },
+  { code: "IT", name: "Italy", currency: "EUR", sources: ["apple-store", "apple-refurbished", "lenovo", "amazon", "ebay"] },
+  { code: "NL", name: "Netherlands", currency: "EUR", sources: ["apple-store", "apple-refurbished", "lenovo", "amazon", "ebay"] },
+  { code: "AU", name: "Australia", currency: "AUD", sources: ["apple-store", "apple-refurbished", "lenovo", "dell-store", "amazon", "ebay"] },
+  { code: "CA", name: "Canada", currency: "CAD", sources: ["apple-store", "apple-refurbished", "lenovo", "dell-store", "amazon", "ebay"] },
+  { code: "SG", name: "Singapore", currency: "SGD", sources: ["apple-store", "apple-refurbished", "lenovo", "dell-store", "amazon"] },
+  { code: "SE", name: "Sweden", currency: "SEK", sources: ["apple-store", "lenovo", "dell-store", "amazon"], partial: true }, // no apple-refurbished, no ebay
+  { code: "CH", name: "Switzerland", currency: "CHF", sources: ["apple-store", "lenovo", "dell-store", "ebay"], partial: true }, // no apple-refurbished, no amazon
+  { code: "AT", name: "Austria", currency: "EUR", sources: ["apple-store", "apple-refurbished", "lenovo", "ebay"], partial: true }, // no dell-store, no amazon
+  { code: "IE", name: "Ireland", currency: "EUR", sources: ["apple-store", "apple-refurbished", "lenovo", "ebay"], partial: true }, // no dell-store, no amazon
+  { code: "BR", name: "Brazil", currency: "BRL", sources: ["apple-store", "lenovo", "dell-store", "amazon"], partial: true }, // no apple-refurbished, no ebay
+  { code: "BE", name: "Belgium", currency: "EUR", sources: ["apple-store", "lenovo", "ebay"], partial: true }, // no apple-refurbished, no dell-store, no amazon
+  { code: "IN", name: "India", currency: "INR", sources: ["apple-store", "lenovo", "amazon"], partial: true }, // no apple-refurbished, no dell-store, no ebay
+  { code: "MX", name: "Mexico", currency: "MXN", sources: ["apple-store", "lenovo", "amazon"], partial: true }, // no apple-refurbished, no dell-store, no ebay
+  { code: "AE", name: "United Arab Emirates", currency: "AED", sources: ["apple-store", "amazon"], partial: true }, // no apple-refurbished, no lenovo, no dell-store, no ebay
   { code: "KR", name: "South Korea", currency: "KRW", sources: ["apple-store", "apple-refurbished", "lenovo"], partial: true }, // no dell-store; no marketplace/retail
   { code: "TW", name: "Taiwan", currency: "TWD", sources: ["apple-store", "apple-refurbished", "lenovo"], partial: true }, // no dell-store; no marketplace/retail
-  { code: "CH", name: "Switzerland", currency: "CHF", sources: ["apple-store", "lenovo", "dell-store"], partial: true }, // no apple-refurbished; no marketplace/retail
-  { code: "AT", name: "Austria", currency: "EUR", sources: ["apple-store", "apple-refurbished", "lenovo"], partial: true }, // no dell-store; no marketplace/retail
-  { code: "BE", name: "Belgium", currency: "EUR", sources: ["apple-store", "lenovo"], partial: true }, // no apple-refurbished, no dell-store; no marketplace/retail
   { code: "DK", name: "Denmark", currency: "DKK", sources: ["apple-store", "lenovo", "dell-store"], partial: true }, // no apple-refurbished; no marketplace/retail
   { code: "FI", name: "Finland", currency: "EUR", sources: ["apple-store", "lenovo"], partial: true }, // no apple-refurbished, no dell-store; no marketplace/retail
   { code: "NO", name: "Norway", currency: "NOK", sources: ["apple-store", "lenovo"], partial: true }, // no apple-refurbished, no dell-store; no marketplace/retail
   { code: "PT", name: "Portugal", currency: "EUR", sources: ["apple-store", "lenovo"], partial: true }, // no apple-refurbished, no dell-store; no marketplace/retail
-  { code: "IE", name: "Ireland", currency: "EUR", sources: ["apple-store", "apple-refurbished", "lenovo"], partial: true }, // no dell-store; no marketplace/retail
   { code: "NZ", name: "New Zealand", currency: "NZD", sources: ["apple-store", "apple-refurbished", "lenovo", "dell-store"], partial: true }, // no marketplace/retail
 ];
 

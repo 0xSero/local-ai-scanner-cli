@@ -225,9 +225,11 @@ console.log(evo.snapshotsAnalyzed, "snapshots;", Object.keys(evo.products).lengt
 ## Data sources
 
 18 sources across 28 regions, accessed via plain HTTP GET (no API keys, no
-headless browser). Sources that block plain HTTP (eBay, Allegro, Micro Center,
-Newegg) are tracked and attempted every scan — failures are recorded in the
-snapshot's `errors` array.
+headless browser). Sources that block plain HTTP (Allegro, Micro Center, Newegg)
+are tracked and attempted every scan — failures are recorded in the snapshot's
+`errors` array. eBay gates some country sites behind a JS challenge but serves
+its search HTML to a full browser fingerprint, which the shared fetch helper sends,
+so its listings are captured where the site allows.
 
 Every source shares one set of listing matchers (`sources/listing-match.ts`):
 a title must contain every word of the query, must not name an accessory (a
@@ -239,7 +241,7 @@ same Amazon ASIN and costs more).
 | Source | Region | Categories | Method |
 | --- | --- | --- | --- |
 | **Newegg** | US | GPU, memory, AMD | Embedded `window.__initialState__` JSON |
-| **Amazon** | US, DE, GB, JP, PL | All (incl. laptop) | HTML scraping with session cookies for currency |
+| **Amazon** | US, DE, GB, JP, PL, FR, IT, ES, NL, BE, SE, CA, MX, BR, AU, SG, AE, IN | All (incl. laptop) | HTML scraping with session cookies for currency |
 | **Apple Store (new)** | US, DE, GB, JP, PL | Apple | Embedded chip-keyed price JSON on buy pages |
 | **Apple Refurbished** | US, DE, GB, JP, PL | Apple | Schema.org JSON-LD `Product` nodes |
 | **Alternate.de** | DE | GPU, memory, laptop | HTML scraping (`.price` spans, German format) |
@@ -249,7 +251,7 @@ same Amazon ASIN and costs more).
 | **AWD-IT** | GB | GPU, memory, AMD | Magento 2 HTML scraping (`.product-item`) |
 | **Ceneo** | PL | All | JSON-LD `ItemList` (price comparison aggregator) |
 | **Dospara** | JP | GPU, memory, AMD, laptop | Salesforce Commerce Cloud HTML scraping |
-| **eBay** | US, DE, GB, PL | All | HTML scraping (blocked by JS challenge) |
+| **eBay** | US, DE, GB, PL, AT, BE, CA, CH, ES, FR, IE, IT, NL, AU | All | HTML scraping (`s-card` title + price spans) |
 | **Allegro** | PL | All | HTML scraping (blocked by DataDome) |
 | **Micro Center** | US | All | HTML scraping (blocked by Cloudflare Turnstile) |
 | **Yodobashi** | JP | All | HTML scraping (blocked at network level) |

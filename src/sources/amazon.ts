@@ -15,6 +15,26 @@
  *   DE → amazon.de     (EUR)
  *   GB → amazon.co.uk  (GBP)
  *   JP → amazon.co.jp  (JPY)
+ *   PL → amazon.pl     (PLN)
+ *   FR → amazon.fr     (EUR)
+ *   IT → amazon.it     (EUR)
+ *   ES → amazon.es     (EUR)
+ *   NL → amazon.nl     (EUR)
+ *   BE → amazon.com.be (EUR)
+ *   SE → amazon.se     (SEK)
+ *   CA → amazon.ca     (CAD)
+ *   MX → amazon.com.mx  (MXN)
+ *   BR → amazon.com.br  (BRL)
+ *   AU → amazon.com.au  (AUD)
+ *   SG → amazon.sg     (SGD)
+ *   AE → amazon.ae     (AED)
+ *   IN → amazon.in     (INR)
+ *
+ * Only a region with its own marketplace in its own currency is listed: a
+ * country Amazon serves from a neighbouring domain (Switzerland and Denmark from
+ * amazon.de, Ireland from amazon.co.uk, Portugal from amazon.es) would be priced
+ * in that neighbour's market, not its own, so it is left out rather than
+ * labelled with a price it is not charged.
  */
 import * as cheerio from "cheerio";
 import type { PriceListing, Product, SourceError } from "../types.js";
@@ -30,6 +50,19 @@ const DOMAINS: Record<string, string> = {
   GB: "amazon.co.uk",
   JP: "amazon.co.jp",
   PL: "amazon.pl",
+  FR: "amazon.fr",
+  IT: "amazon.it",
+  ES: "amazon.es",
+  NL: "amazon.nl",
+  BE: "amazon.com.be",
+  SE: "amazon.se",
+  CA: "amazon.ca",
+  MX: "amazon.com.mx",
+  BR: "amazon.com.br",
+  AU: "amazon.com.au",
+  SG: "amazon.sg",
+  AE: "amazon.ae",
+  IN: "amazon.in",
 };
 
 /**
@@ -277,7 +310,7 @@ async function scanAmazon(
 export const amazonSource: Source = {
   id: "amazon",
   name: "Amazon",
-  regions: ["US", "DE", "GB", "JP", "PL"],
+  regions: ["US", "DE", "GB", "JP", "PL", "FR", "IT", "ES", "NL", "BE", "SE", "CA", "MX", "BR", "AU", "SG", "AE", "IN"],
   categories: ["gpu", "apple", "memory", "amd", "laptop"],
   scan: (products, ctx) => scanAmazon(products, ctx.regionCode),
 };

@@ -326,7 +326,7 @@ export const PRODUCTS: AppleProduct[] = [
       ebay: "NVIDIA H100 80GB PCIe",
       ceneo: "NVIDIA H100",
     },
-    minPriceUsd: 8000,
+    minPriceUsd: 25000,
   },
   {
     id: "h200",
@@ -339,7 +339,7 @@ export const PRODUCTS: AppleProduct[] = [
       ebay: "NVIDIA H200 141GB",
       ceneo: "NVIDIA H200",
     },
-    minPriceUsd: 10000,
+    minPriceUsd: 30000,
   },
   {
     id: "a100",
@@ -352,7 +352,7 @@ export const PRODUCTS: AppleProduct[] = [
       ebay: "NVIDIA A100 80GB",
       ceneo: "NVIDIA A100",
     },
-    minPriceUsd: 3000,
+    minPriceUsd: 10000,
   },
   {
     id: "l40s",
@@ -365,7 +365,7 @@ export const PRODUCTS: AppleProduct[] = [
       ebay: "NVIDIA L40S 48GB",
       ceneo: "NVIDIA L40S",
     },
-    minPriceUsd: 3000,
+    minPriceUsd: 7000,
   },
   {
     id: "rtx-pro-5000-blackwell",
@@ -378,7 +378,7 @@ export const PRODUCTS: AppleProduct[] = [
       ebay: "RTX PRO 5000 Blackwell",
       ceneo: "RTX PRO 5000 Blackwell",
     },
-    minPriceUsd: 3000,
+    minPriceUsd: 4200,
   },
   {
     id: "gb200",
@@ -389,7 +389,7 @@ export const PRODUCTS: AppleProduct[] = [
       amazon: "NVIDIA GB200",
       ebay: "NVIDIA GB200 NVL72",
     },
-    minPriceUsd: 40000,
+    minPriceUsd: 60000,
   },
   {
     id: "mi325x",
@@ -400,7 +400,7 @@ export const PRODUCTS: AppleProduct[] = [
       amazon: "AMD Instinct MI325X",
       ebay: "AMD Instinct MI325X 256GB",
     },
-    minPriceUsd: 8000,
+    minPriceUsd: 15000,
   },
   {
     id: "gaudi-3",
@@ -411,7 +411,7 @@ export const PRODUCTS: AppleProduct[] = [
       amazon: "Intel Gaudi 3",
       ebay: "Intel Gaudi 3 HL-338",
     },
-    minPriceUsd: 5000,
+    minPriceUsd: 16000,
   },
 
   // ── NVIDIA — Jetson embedded ────────────────────────────────────────────
@@ -426,7 +426,7 @@ export const PRODUCTS: AppleProduct[] = [
       ebay: "Jetson AGX Thor Developer Kit",
       ceneo: "Jetson AGX Thor",
     },
-    minPriceUsd: 2000,
+    minPriceUsd: 3499,
   },
   {
     id: "jetson-orin-agx",
@@ -439,7 +439,7 @@ export const PRODUCTS: AppleProduct[] = [
       ebay: "Jetson AGX Orin 64GB",
       ceneo: "Jetson AGX Orin",
     },
-    minPriceUsd: 1000,
+    minPriceUsd: 1999,
   },
 
   // ── AMD GPUs — Radeon / Instinct ───────────────────────────────────────
@@ -469,7 +469,7 @@ export const PRODUCTS: AppleProduct[] = [
       ceneo: "RX 9070",
       "awd-it": "RX 9070",
     },
-    minPriceUsd: 500,
+    minPriceUsd: 549,
   },
   {
     id: "rx-9060-xt",
@@ -483,7 +483,7 @@ export const PRODUCTS: AppleProduct[] = [
       ceneo: "RX 9060 XT",
       "awd-it": "RX 9060 XT",
     },
-    minPriceUsd: 300,
+    minPriceUsd: 349,
   },
   {
     id: "rx-7900-xtx",
@@ -568,7 +568,7 @@ export const PRODUCTS: AppleProduct[] = [
       ceneo: "Arc B580",
       "awd-it": "Arc B580",
     },
-    minPriceUsd: 200,
+    minPriceUsd: 249,
   },
   {
     id: "arc-b570",
@@ -582,7 +582,7 @@ export const PRODUCTS: AppleProduct[] = [
       ceneo: "Arc B570",
       "awd-it": "Arc B570",
     },
-    minPriceUsd: 170,
+    minPriceUsd: 219,
   },
   {
     id: "arc-a770",
@@ -596,7 +596,7 @@ export const PRODUCTS: AppleProduct[] = [
       ceneo: "Arc A770",
       "awd-it": "Arc A770",
     },
-    minPriceUsd: 180,
+    minPriceUsd: 349,
   },
 
   // ── Apple Silicon — Mac Studio ─────────────────────────────────────────
@@ -1091,7 +1091,7 @@ export const PRODUCTS: AppleProduct[] = [
       alternate: "RTX 5090 Laptop",
       dospara: "RTX 5090 ノートPC",
     },
-    minPriceUsd: 2000,
+    minPriceUsd: 2500,
   },
   {
     id: "rtx-5080-laptop",
@@ -1104,7 +1104,7 @@ export const PRODUCTS: AppleProduct[] = [
       alternate: "RTX 5080 Laptop",
       dospara: "RTX 5080 ノートPC",
     },
-    minPriceUsd: 1500,
+    minPriceUsd: 2000,
   },
   {
     id: "rtx-4090-laptop",
@@ -1117,7 +1117,7 @@ export const PRODUCTS: AppleProduct[] = [
       alternate: "RTX 4090 Laptop",
       dospara: "RTX 4090 ノートPC",
     },
-    minPriceUsd: 1200,
+    minPriceUsd: 2000,
   },
   {
     id: "rtx-5070-ti-laptop",
@@ -1130,7 +1130,7 @@ export const PRODUCTS: AppleProduct[] = [
       alternate: "RTX 5070 Ti Laptop",
       dospara: "RTX 5070 Ti ノートPC",
     },
-    minPriceUsd: 1100,
+    minPriceUsd: 1500,
   },
   {
     id: "rtx-4060-laptop",
@@ -1143,7 +1143,7 @@ export const PRODUCTS: AppleProduct[] = [
       alternate: "RTX 4060 Laptop",
       dospara: "RTX 4060 ノートPC",
     },
-    minPriceUsd: 600,
+    minPriceUsd: 800,
   },
 ];
 

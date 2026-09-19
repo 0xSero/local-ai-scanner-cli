@@ -192,6 +192,14 @@ export interface Product {
   manufacturer: string;
   /** Minimum price in USD below which a listing is almost certainly an
    * accessory (water block, bracket, cable) rather than the actual product.
-   * Used by Amazon/Newegg to filter false positives. 0 means no floor. */
+   * Used by Amazon/Newegg to filter false positives. 0 means no floor.
+   *
+   * This is also the *ceiling* basis: a source rejects a listing above
+   * `minPriceUsd * MAX_PRICE_MULTIPLIER` (see each source) as a complete
+   * system bundle rather than the part. So the value has to sit at the
+   * product's real price: an accessory-level floor that clears water blocks
+   * also excludes the real listings, because the ceiling lands below them.
+   * An H100 at a 8000 floor, for instance, caps out at 32000 and hides the
+   * card's actual 25000-40000 asking prices. */
   minPriceUsd?: number;
 }
