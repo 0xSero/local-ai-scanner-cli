@@ -1512,6 +1512,7 @@ export const PRODUCTS: AppleProduct[] = [
   // ── AMD Strix Halo ─────────────────────────────────────────────────────
   {
     id: "amd-strix-halo-framework-desktop",
+    minPriceUsd: 1000,
     name: "Framework Desktop (AMD Ryzen AI Max 395+)",
     category: "amd",
     manufacturer: "AMD / Framework",
@@ -1519,6 +1520,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "amd-strix-halo-mini-pc",
+    minPriceUsd: 1000,
     name: "Strix Halo Mini PC (Ryzen AI Max)",
     category: "amd",
     manufacturer: "AMD / Minisforum/GMKtec",
@@ -1528,6 +1530,7 @@ export const PRODUCTS: AppleProduct[] = [
   // ── Memory ─────────────────────────────────────────────────────────────
   {
     id: "ddr5-32gb-5600",
+    minPriceUsd: 60,
     name: "32GB DDR5-5600 (2×16GB)",
     category: "memory",
     manufacturer: "Various",
@@ -1535,6 +1538,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "ddr5-64gb-5600",
+    minPriceUsd: 120,
     name: "64GB DDR5-5600 (2×32GB)",
     category: "memory",
     manufacturer: "Various",
@@ -1542,6 +1546,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "ddr4-32gb-3200",
+    minPriceUsd: 50,
     name: "32GB DDR4-3200 (2×16GB)",
     category: "memory",
     manufacturer: "Various",
@@ -1549,6 +1554,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "ddr4-ecc-64gb",
+    minPriceUsd: 150,
     name: "64GB DDR4 ECC (Registered)",
     category: "memory",
     manufacturer: "Various",
@@ -1556,6 +1562,7 @@ export const PRODUCTS: AppleProduct[] = [
   },
   {
     id: "ddr5-ecc-64gb",
+    minPriceUsd: 200,
     name: "64GB DDR5 ECC (Registered)",
     category: "memory",
     manufacturer: "Various",
