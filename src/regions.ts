@@ -79,10 +79,10 @@ export const REGIONS: RegionSpec[] = [
   { code: "SG", name: "Singapore", currency: "SGD", sources: ["apple-store", "apple-refurbished", "lenovo", "dell-store", "amazon"] },
   { code: "SE", name: "Sweden", currency: "SEK", sources: ["apple-store", "lenovo", "dell-store", "amazon"], partial: true }, // no apple-refurbished, no ebay
   { code: "CH", name: "Switzerland", currency: "CHF", sources: ["apple-store", "lenovo", "dell-store", "ebay"], partial: true }, // no apple-refurbished, no amazon
-  { code: "AT", name: "Austria", currency: "EUR", sources: ["apple-store", "apple-refurbished", "lenovo", "ebay"], partial: true }, // no dell-store, no amazon
-  { code: "IE", name: "Ireland", currency: "EUR", sources: ["apple-store", "apple-refurbished", "lenovo", "ebay"], partial: true }, // no dell-store, no amazon
+  { code: "AT", name: "Austria", currency: "EUR", sources: ["apple-store", "apple-refurbished", "lenovo", "ebay", "dell-store"] }, // no amazon
+  { code: "IE", name: "Ireland", currency: "EUR", sources: ["apple-store", "apple-refurbished", "lenovo", "ebay", "dell-store"] }, // no amazon
   { code: "BR", name: "Brazil", currency: "BRL", sources: ["apple-store", "lenovo", "dell-store", "amazon"], partial: true }, // no apple-refurbished, no ebay
-  { code: "BE", name: "Belgium", currency: "EUR", sources: ["apple-store", "lenovo", "ebay"], partial: true }, // no apple-refurbished, no dell-store, no amazon
+  { code: "BE", name: "Belgium", currency: "EUR", sources: ["apple-store", "lenovo", "ebay", "dell-store"], partial: true }, // no apple-refurbished, no amazon
   { code: "IN", name: "India", currency: "INR", sources: ["apple-store", "lenovo", "amazon"], partial: true }, // no apple-refurbished, no dell-store, no ebay
   { code: "MX", name: "Mexico", currency: "MXN", sources: ["apple-store", "lenovo", "amazon"], partial: true }, // no apple-refurbished, no dell-store, no ebay
   { code: "AE", name: "United Arab Emirates", currency: "AED", sources: ["apple-store", "amazon"], partial: true }, // no apple-refurbished, no lenovo, no dell-store, no ebay
@@ -93,10 +93,10 @@ export const REGIONS: RegionSpec[] = [
   { code: "NO", name: "Norway", currency: "NOK", sources: ["apple-store", "lenovo"], partial: true }, // no apple-refurbished, no dell-store; no marketplace/retail
   { code: "PT", name: "Portugal", currency: "EUR", sources: ["apple-store", "lenovo"], partial: true }, // no apple-refurbished, no dell-store; no marketplace/retail
   { code: "NZ", name: "New Zealand", currency: "NZD", sources: ["apple-store", "apple-refurbished", "lenovo", "dell-store"], partial: true }, // no marketplace/retail
-  { code: "HK", name: "Hong Kong", currency: "HKD", sources: ["lenovo", "apple-store"], partial: true }, // no apple-refurbished, no dell-store, no marketplace
+  { code: "HK", name: "Hong Kong", currency: "HKD", sources: ["lenovo", "apple-store", "apple-refurbished", "dell-store"], partial: true }, // no marketplace
   { code: "TH", name: "Thailand", currency: "THB", sources: ["lenovo", "apple-store"], partial: true }, // no apple-refurbished, no dell-store, no marketplace
   { code: "PH", name: "Philippines", currency: "PHP", sources: ["lenovo", "apple-store"], partial: true }, // no apple-refurbished, no dell-store, no marketplace
-  { code: "MY", name: "Malaysia", currency: "MYR", sources: ["lenovo", "apple-store", "ebay"], partial: true }, // no apple-refurbished, no dell-store, no amazon
+  { code: "MY", name: "Malaysia", currency: "MYR", sources: ["lenovo", "apple-store", "ebay", "dell-store"], partial: true }, // no apple-refurbished, no amazon
   { code: "CL", name: "Chile", currency: "CLP", sources: ["lenovo", "apple-store"], partial: true }, // no apple-refurbished, no dell-store, no marketplace
 ];
 

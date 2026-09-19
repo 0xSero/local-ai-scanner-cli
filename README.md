@@ -111,13 +111,13 @@ starts, then `✓` with a listing count or `✗` with an error count:
 
 ```
 ⟳ Scanning gpu across US…
-  → US/newegg (66 products)
-  → US/amazon (66 products)
-  → US/ebay (66 products)
-  → US/microcenter (66 products)
-  ✗ US/microcenter — 66 error(s)
-  ✗ US/ebay — 66 error(s)
-  ✗ US/newegg — 66 error(s)
+  → US/newegg (76 products)
+  → US/amazon (76 products)
+  → US/ebay (76 products)
+  → US/microcenter (76 products)
+  ✗ US/microcenter — 76 error(s)
+  ✗ US/ebay — 76 error(s)
+  ✗ US/newegg — 76 error(s)
   ✓ US/amazon — 29 listings
 ✓ 29 listings collected.
 ```
@@ -243,7 +243,7 @@ same Amazon ASIN and costs more).
 | **Newegg** | US | GPU, memory, AMD | Embedded `window.__initialState__` JSON |
 | **Amazon** | US, DE, GB, JP, PL, FR, IT, ES, NL, BE, SE, CA, MX, BR, AU, SG, AE, IN | All (incl. laptop) | HTML scraping with session cookies for currency |
 | **Apple Store (new)** | US, DE, GB, JP, PL, FR, IT, ES, NL, SE, AU, CA, IN, BR, MX, AE, SG, KR, TW, CH, AT, BE, DK, FI, NO, PT, IE, NZ, HK, TH, PH, MY, CL | Apple | Embedded chip-keyed price JSON on buy pages |
-| **Apple Refurbished** | US, DE, GB, JP, PL | Apple | Schema.org JSON-LD `Product` nodes |
+| **Apple Refurbished** | US, DE, GB, JP, PL, FR, ES, IT, NL, AU, CA, SG, HK, IE, KR, TW, AT, NZ | Apple | Schema.org JSON-LD `Product` nodes |
 | **Alternate.de** | DE | GPU, memory, laptop | HTML scraping (`.price` spans, German format) |
 | **Minisforum Store** | US | AMD | Shopify `/products.json` |
 | **GMKtec Store** | US | AMD | Shopify `/products.json` |
@@ -257,7 +257,7 @@ same Amazon ASIN and costs more).
 | **Yodobashi** | JP | All | HTML scraping (blocked at network level) |
 | **Morele.net** | PL | laptop | HTML scraping (`.cat-product` `data-product-*` attributes) |
 | **Lenovo Store** | GB, FR, IT, ES, NL, DE, AT, BE, CH, DK, FI, NO, SE, PT, IE, JP, CA, IN, SG, KR, TW, BR, MX, AU, NZ, HK, TH, PH, MY, CL | laptop | Embedded JSON `"price"` + `<meta name="currencycode">` on PDPs |
-| **Dell Store** | AU, NZ, SG, CA, BR, DK, SE, CH | laptop | Server-rendered `data-product-detail` JSON (`dellPrice`) + `currency=` attr |
+| **Dell Store** | AU, NZ, SG, CA, BR, DK, SE, CH, IE, AT, BE, HK, MY | laptop | Server-rendered `data-product-detail` JSON (`dellPrice`) + `currency=` attr |
 
 Laptop coverage is honest-live, not universal. Working plain-HTTP laptop sources:
 the Lenovo vendor store (25 locales) and the Dell vendor store (8 locales)
@@ -299,39 +299,47 @@ live-verified (2026-09-18) to return a real price for it.
 | **BR** | BRL | 3 (apple-store, lenovo, dell-store) | ✓ no apple-refurbished; no marketplace/retail |
 | **MX** | MXN | 2 (apple-store, lenovo) | ✓ no apple-refurbished, no dell-store; no marketplace/retail |
 | **AE** | AED | 1 (apple-store) | ✓ no apple-refurbished, no lenovo, no dell-store; no marketplace/retail |
-| **SG** | SGD | 4 (apple-store, apple-refurbished, lenovo, dell-store) | ✓ no marketplace/retail |
+| **SG** | SGD | 5 (apple-store, apple-refurbished, lenovo, dell-store, amazon) | ✓ no marketplace/retail |
 | **KR** | KRW | 3 (apple-store, apple-refurbished, lenovo) | ✓ no dell-store; no marketplace/retail |
 | **TW** | TWD | 3 (apple-store, apple-refurbished, lenovo) | ✓ no dell-store; no marketplace/retail |
 | **CH** | CHF | 3 (apple-store, lenovo, dell-store) | ✓ no apple-refurbished; no marketplace/retail |
-| **AT** | EUR | 3 (apple-store, apple-refurbished, lenovo) | ✓ no dell-store; no marketplace/retail |
-| **BE** | EUR | 2 (apple-store, lenovo) | ✓ no apple-refurbished, no dell-store; no marketplace/retail |
+| **AT** | EUR | 5 (apple-store, apple-refurbished, lenovo, ebay, dell-store) | ✓ no marketplace/retail |
+| **BE** | EUR | 4 (apple-store, lenovo, ebay, dell-store) | ✓ no apple-refurbished; no marketplace/retail |
 | **DK** | DKK | 3 (apple-store, lenovo, dell-store) | ✓ no apple-refurbished; no marketplace/retail |
 | **FI** | EUR | 2 (apple-store, lenovo) | ✓ no apple-refurbished, no dell-store; no marketplace/retail |
 | **NO** | NOK | 2 (apple-store, lenovo) | ✓ no apple-refurbished, no dell-store; no marketplace/retail |
 | **PT** | EUR | 2 (apple-store, lenovo) | ✓ no apple-refurbished, no dell-store; no marketplace/retail |
-| **IE** | EUR | 3 (apple-store, apple-refurbished, lenovo) | ✓ no dell-store; no marketplace/retail |
+| **IE** | EUR | 5 (apple-store, apple-refurbished, lenovo, ebay, dell-store) | ✓ no marketplace/retail |
 | **NZ** | NZD | 4 (apple-store, apple-refurbished, lenovo, dell-store) | ✓ no marketplace/retail |
+| **HK** | HKD | 4 (lenovo, apple-store, apple-refurbished, dell-store) | ✓ no marketplace/retail |
+| **MY** | MYR | 4 (lenovo, apple-store, ebay, dell-store) | ✓ no apple-refurbished; no amazon |
+| **TH** | THB | 2 (lenovo, apple-store) | ✓ no apple-refurbished, no dell-store; no marketplace/retail |
+| **PH** | PHP | 2 (lenovo, apple-store) | ✓ no apple-refurbished, no dell-store; no marketplace/retail |
+| **CL** | CLP | 2 (lenovo, apple-store) | ✓ no apple-refurbished, no dell-store; no marketplace/retail |
 
-### Blocked / excluded stores (live recon 2026-09-18)
+### Blocked / excluded stores (live recon 2026-09-19)
 
 Verified unreachable over plain HTTP and therefore not added:
 
-- **Apple Store (new)** — `za` returns **404** (no Apple store in South Africa).
-- **Apple Refurbished** — **404** in `se, dk, fi, no, pt, in, br, mx, ae, za`
-  (`/shop/refurbished/mac/macbook-pro` does not exist there), so those regions
-  carry Apple *new* pricing only.
+- **Apple Store (new)** — `co, ar, za` return **404** (no Apple store there).
+- **Apple Refurbished** — **404** in `th, ph, my, cl, co, ar, ae, se, dk, fi,
+  no, pt, in, br, mx, za` (`/shop/refurbished/mac` does not exist there), so
+  those regions carry Apple *new* pricing only. `hk, sg, ie` render JSON-LD
+  `Product` nodes and are covered.
 - **Lenovo Store** — `pl, ae, za` return **HTTP 200** but a JS-only body with no
-  server-rendered `"price"`, so they are excluded.
-- **Dell Store** — `de/uk/fr/it/es/nl/no/ie/at/be/jp/kr/tw` return **HTTP 200**
-  with zero server-rendered prices; `en-in` **redirects** to a bot-challenged
-  third-party store; `es-mx, en-ae, pt-pt, fi-fi, en-za` **time out** (no
-  response within 15s). Only the 8 SSR locales above are added.
+  server-rendered `"price"`, so they are excluded. `co, ar` answer 200 with a
+  product page but no price either, so those two are not regions at all.
+- **Dell Store** — `en-in, th-th, pl-pl, el-gr` answer **HTTP 200** with no
+  `dellPrice` payload; `en-ae, es-mx, es-cl, es-co, es-ar, cs-cz, en-za, en-il,
+  en-sa` answer **0** (no response); `en-ph, hu-hu, ro-ro, tr-tr` answer **404**.
+  The other twenty locales server-render `dellPrice`, and thirteen of them are
+  covered: `au, nz, sg, ca, br, dk, se, ch, ie, at, be, hk, my`.
 
 ## Products tracked
 
-118 products across 5 categories:
+128 products across 5 categories:
 
-- **GPUs (66)**: RTX 5090–5060, Ti variants, RTX 4090–4060, RTX 3090–3060 Ti, RTX Pro 6000/5000/4500/4000 Blackwell, RTX 6000/4000/2000 Ada, RTX 5000 Ada, RTX A6000/A5000/A4000, DGX Spark, H100, H200, A100, L40S, L40, L4, T4, Tesla V100, GB200, B300, Instinct MI325X/MI355X, Gaudi 3, Jetson AGX Thor, Jetson AGX Orin, Jetson Orin Nano, Radeon RX 9070 XT/9070/9070 GRE/9060 XT (16GB & 8GB)/7900 XTX/7900 XT/7700 XT, Radeon AI PRO R9700, Intel Arc B580/B570/A770/A750/A380, Intel Arc Pro B60/B50
+- **GPUs (76)**: RTX 5090–5060, Ti variants, RTX 4090–4060, RTX 3090–3060 Ti, RTX Pro 6000/5000/4500/4000 Blackwell, RTX 6000/5000/4000/2000 Ada, RTX A6000/A5500/A5000/A4500/A4000/A2000, DGX Spark, H100, H200, A100, L40S, L40, L4, T4, Tesla V100, GB200, B300, Instinct MI325X/MI355X, Gaudi 3, Jetson AGX Thor, Jetson AGX Orin, Jetson Orin NX, Jetson Orin Nano, Radeon RX 9070 XT/9070/9070 GRE/9060 XT (16GB & 8GB)/9060/7900 XTX/7900 XT/7900 GRE/7700 XT, Radeon AI PRO R9700, Radeon Pro W7900/W7800, Intel Arc B580/B570/A770/A750/A580/A380, Intel Arc Pro B60/B50/A60
 - **Apple Silicon (25)**: Mac Studio (M1/M2 Max & Ultra, M3 Ultra, M4 Max), Mac mini (M1–M4, M4 Pro), MacBook Pro (M1–M5, Pro & Max tiers)
 - **AMD (2)**: Framework Desktop (Ryzen AI Max 395+), Strix Halo Mini PC
 - **Memory (5)**: DDR5-5600 32/64GB, DDR4-3200 32GB, DDR4/DDR5 ECC 64GB RDIMM
@@ -342,7 +350,7 @@ Verified unreachable over plain HTTP and therefore not added:
 ```
 src/
   types.ts          # Domain types + Effect v4 Schema definitions
-  products.ts       # Product catalog (118 products, 5 categories)
+  products.ts       # Product catalog (128 products, 5 categories)
   regions.ts        # Region definitions (28 regions with source mapping)
   source.ts         # Source interface + registry
   scan.ts           # Scan orchestrator (runs sources, builds snapshot)

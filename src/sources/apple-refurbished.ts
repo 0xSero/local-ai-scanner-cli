@@ -32,10 +32,11 @@ const COUNTRY_PREFIX: Record<string, string> = {
   AU: "/au",
   CA: "/ca",
   SG: "/sg",
+  HK: "/hk",
+  IE: "/ie",
   KR: "/kr",
   TW: "/tw",
   AT: "/at",
-  IE: "/ie",
   NZ: "/nz",
 };
 

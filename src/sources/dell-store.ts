@@ -31,6 +31,11 @@ const DELL_LOCALES: Record<string, string> = {
   DK: "da-dk",
   SE: "sv-se",
   CH: "de-ch",
+  IE: "en-ie",
+  AT: "de-at",
+  BE: "fr-be",
+  HK: "en-hk",
+  MY: "en-my",
 };
 
 /**
