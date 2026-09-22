@@ -16,7 +16,7 @@ test("Ceneo preserves JSON-LD decimal prices and localized comma prices", async 
   })}</script>`;
   const fetch = spyOn(globalThis, "fetch").mockResolvedValue(new Response(html));
   try {
-    const product: Product = { id: "fixture", name: "Fixture GPU", category: "gpu", queries: { ceneo: "Fixture GPU" } };
+    const product: Product = { id: "fixture", name: "Fixture GPU", manufacturer: "Fixture", category: "gpu", queries: { ceneo: "Fixture GPU" } };
     const result = await ceneoSource.scan([product], { regionCode: "PL" });
     expect(result.errors).toEqual([]);
     expect(result.listings.map((listing) => listing.price)).toEqual(Array(4).fill(1299.99));
