@@ -59,10 +59,14 @@ const USD_TO_PLN = 4.0;
 const MAX_PRICE_MULTIPLIER = 4;
 
 function parsePolishPrice(text: string): number | null {
-  // Polish format: "3699,0" or "1 299,99" — comma = decimal, space = thousands
+  // JSON-LD uses decimal dots; also accept localized Polish comma prices.
   const cleaned = text.replace(/[^\d.,]/g, "").trim();
   if (!cleaned) return null;
-  return parseFloat(cleaned.replace(/\./g, "").replace(",", "."));
+  const normalized = cleaned.includes(",")
+    ? cleaned.replace(/\./g, "").replace(",", ".")
+    : cleaned;
+  const price = Number(normalized);
+  return Number.isFinite(price) ? price : null;
 }
 
 function titleMatches(title: string, query: string): boolean {
