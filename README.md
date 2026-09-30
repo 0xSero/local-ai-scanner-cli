@@ -1,3 +1,5 @@
+> **Retired 2026-09-30.** Hardware prices now live in [local-ai-registry](https://github.com/0xSero/local-ai-registry). Unmerged scanner work from 2026-09-19 is on branch `local-2026-09-19`. This repo is archived and read-only.
+
 # local-ai-scanner-cli
 
 Cached hardware price scanner for [local.ai](https://local.ai). Pulls current
